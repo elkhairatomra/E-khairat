@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخيرات لحج و عمرة - حجز باقة العمرة</title>
+
+
+    <link rel="icon" href="img/icon.png">
+
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+         <!-- File CSS -->
+         <link rel="stylesheet" href="CSS/style.css">
+    </head>
+<body>
+
+
+    <div class="cart">
+        <div class="top_cart">
+            <h3>عناصر السلة : <span class="Count_item_cart">0</span></h3>
+            <span onclick="open_close_cart()" class="close_cart"><i class="fa-regular fa-circle-xmark"></i></span>
+        </div>
+
+
+        <div class="items_in_cart" id="cart_items">
+
+
+
+        </div>
+
+
+        <div class="bottom_cart">
+            <div class="total">
+                <p>المجموع الفرعي</p>
+                <p class="price_cart_toral">د.ج0</p>
+            </div>
+
+            <div class="button_cart">
+                <a href="#" class="btn_cart btn">إنهاء الحجز</a>
+                <span onclick="open_close_cart()" class="btn_cart trans_bg btn">متابعة الحجز</span>
+            </div>
+        </div>
+
+    </div>
+
+    <header>
+        <div class="top_header">
+            <div class="container">
+                <a href="#" class="logo"> <img src="img/logo.png" alt=""></a>
+
+                <form action="" class="search_box">
+
+                    <div class="select_box">
+                        <select id="category" name="category">
+
+                            <option value="All Packages">كل الباقات</option>
+                            <option value="Economy">باقات اقتصادية</option>
+                            <option value="Premium">باقات مميزة</option>
+                            <option value="Family">باقات عائلية</option>
+                            <option value="Ramadan">باقات رمضان</option>
+                            <option value="VIP">باقة VIP</option>
+                            <option value="Group">باقات الشركات</option>
+                            <option value="Custom">باقات خاصة</option>
+
+                        </select>
+                    </div>
+
+                    <input type="text" name="search" id="search" placeholder="ابحث عن باقات العمرة" required>
+
+                    <button type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                    
+
+                </form>
+
+                <div class="header_icons">
+                    <div class="icon">
+                        <a href="#">
+                            <i class="fa-regular fa-heart"></i>
+                            <span class="count count_favourite">0</span>
+                        </a>
+                    </div>
+
+                    <div onclick="open_close_cart()" class="icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="count count_item_header">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bottom_header">
+            <div class="container">
+                <nav class="nav">
+
+                    <span onclick="open_Menu()" class="open_menu"><i class="fa-solid fa-bars"></i></span>
+
+                    <div class="category_nav">
+
+                        <div onclick="Open_Categ_list()" class="category_btn">
+                            <i class="fa-solid fa-bars"></i>
+                            <p>تصفح الفئات</p>
+                            <i class="fa-solid fa-angle-down"></i>
+
+                        </div>
+
+
+                        <div class="category_nav_list">
+                            <a href="#">أفضل الباقات</a>
+                            <a href="#">الباقات الاقتصادية</a>
+                            <a href="#">الباقات المميزة</a>
+                            <a href="#">الباقات العائلية</a>
+                            <a href="#">باقات رمضان</a>
+                            <a href="#">باقة VIP</a>
+                            <a href="#">باقات الشركات</a>
+                        </div>
+
+                    </div>
+
+                    <ul class="nav_links">
+
+                        <span onclick="open_Menu()" class="close_menu"><i class="fa-regular fa-circle-xmark"></i></span>
+
+                        <li class="active"><a href="#">الرئيسية</a></li>
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">الباقات</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+
+                    </ul>
+
+                </nav>
+
+                <div class="login_signup btns">
+                    <a href="#" class="btn">تسجيل الدخول  <i class="fa-solid fa-right-to-bracket"></i></a>
+
+                    <a href="#" class="btn">إنشاء حساب <i class="fa-solid fa-user-plus"></i></a>
+                </div>
+
+            </div>
+        </div>
+
+        
+    </header>
+
+
+    <section class="checkout">
+        <form action="">
+
+
+            <div class="container">
+                <div class="ordersummary">
+                    <h1>ملخص الطلب</h1>
+
+                    <div class="items">
+
+    
+
+
+                        <div class="item_cart">
+
+                            <div class="image_name">
+                                <img src="img/product/10.png" alt="">
+
+                                <div class="content">
+                                    <h4>منتج مميز</h4>
+                                    <p class="price_cart">د.ج25</p>
+                                    <div class="quantity_control">
+                                        <button class="decrease_quantity">-</button>
+                                        <span class="quantity">3</span>
+                                        <button class="increase_quantity">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button class="delete_item"><i class="fa-solid fa-trash-can"></i></button>
+
+
+
+                        </div>
+
+                        <div class="item_cart">
+
+                            <div class="image_name">
+                                <img src="img/product/10.png" alt="">
+
+                                <div class="content">
+                                    <h4>منتج مميز</h4>
+                                    <p class="price_cart">د.ج25</p>
+                                    <div class="quantity_control">
+                                        <button class="decrease_quantity">-</button>
+                                        <span class="quantity">3</span>
+                                        <button class="increase_quantity">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button class="delete_item"><i class="fa-solid fa-trash-can"></i></button>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="bottom_summary">
+                        <div class="shop_table">
+                            <p>المجموع الفرعي :</p>
+                            <span class="subtotal_checkout">د.ج325.00</span>
+                        </div>
+
+
+                        <div class="shop_table">
+                            <p>الشحن :</p>
+                            <span class="">د.ج20.00</span>
+                        </div>
+
+
+
+                        <div class="shop_table">
+                            <p>الإجمالي :</p>
+                            <span class="total_checkout">د.ج325.00</span>
+                        </div>
+
+
+                        <div class="button_div">
+                            <button type="submit">تأكيد الطلب</button>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+
+                <div class="input_info">
+                    
+                </div>
+            </div>
+        </form>
+    </section>
+
+
+
+    
+
+    <footer>
+        <div class="container">
+
+            <div class="big_row">
+                <img class="logo_footer" src="img/white_logo.png" alt="">
+
+                <p>احجز أفضل باقات العمرة مع خدمات حجز شاملة وأسعار تنافسية.</p>
+
+                <div class="icons_footer">
+                    <a href="#"><i class="fa-solid fa-phone"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <h4>تصفح سريع</h4>
+
+                <div class="links">
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> باقات اقتصادية</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> باقات مميزة</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> باقات عائلية</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> باقات رمضان</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> باقة VIP</a>
+            <div class="row">
+                <h4>روابط سريعة</h4>
+
+                <div class="links">
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> كيفية الحجز</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> شروط السفر</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> خدمات العملاء</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> الأسئلة المتكررة</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> اتصل بنا</a>
+            <div class="row">
+                <h4>خدماتنا</h4>
+
+                <div class="links">
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> مركز الدعم</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> الشروط و الأحكام</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> سياسة الخصوصية</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> المساعدة</a>
+                    <a href="#"><i class="fa-solid fa-caret-right"></i> الأسئلة الشائعة</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom_footer">
+            <div class="container">
+                <p>&copy; <span>الخيرات للعمرة</span> جميع الحقوق محفوظة.</p>
+
+                <div class="payment_img">
+                    <img src="img/payment_method.png" alt="طرق الدفع">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+      <script src="JS/main.js"></script>
+</body>
+</html>
