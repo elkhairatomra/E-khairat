@@ -11,14 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
 :root {
-  --bg: #edf2f6;
+  --bg: #f8fafc;
   --surface: rgba(255, 255, 255, 0.76);
   --surface-strong: #ffffff;
-  --text: #183044;
-  --muted: #668095;
-  --line: rgba(93, 119, 141, 0.18);
-  --primary: #6f8297;
-  --primary-deep: #51677f;
+  --text: #0f172a;
+  --muted: #475569;
+  --line: rgba(148, 163, 184, 0.2);
+  --primary: #1e293b;
+  --primary-deep: #0f172a;
   --accent: #ff8716;
   --accent-soft: rgba(255, 135, 22, 0.12);
   --shadow: 0 18px 55px rgba(30, 53, 72, 0.14);
@@ -72,43 +72,44 @@ img {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 36px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.48));
-  backdrop-filter: blur(16px);
+  padding: 60px 40px;
+  border: none;
+  border-radius: 40px;
+  background: 
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%),
+    url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  min-height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   box-shadow: var(--shadow);
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: auto -80px -140px auto;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 135, 22, 0.25), transparent 66%);
+  color: #fff;
 }
 
 .topbar {
+  width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
+  margin-bottom: auto;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  color: inherit;
+  color: #fff;
   text-decoration: none;
 }
 
 .brand-mark {
   width: 168px;
-  max-width: 100%;
+  filter: brightness(0) invert(1); /* جعل الشعار أبيض ليتناسب مع الخلفية */
   height: auto;
   object-fit: contain;
   flex-shrink: 0;
@@ -121,23 +122,29 @@ img {
 
 .brand span:last-child {
   margin-top: 4px;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.92rem;
 }
 
 .toolbar {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  padding: 10px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .lang-switch {
   display: inline-flex;
   padding: 5px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
 }
 
 .lang-btn {
@@ -161,11 +168,12 @@ img {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 58px;
-  padding: 10px 14px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.82);
+  min-height: 62px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
 }
 
 .input-shell {
@@ -178,7 +186,11 @@ img {
   outline: 0;
   width: 100%;
   background: transparent;
-  color: var(--text);
+  color: #fff;
+}
+
+.input-shell input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .input-shell .form-control,
@@ -196,14 +208,14 @@ img {
 
 .select-shell span,
 .icon {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .hero-copy {
   position: relative;
   z-index: 1;
-  max-width: 680px;
-  padding: 62px 0 12px;
+  max-width: 800px;
+  margin-bottom: 20px;
 }
 
 .eyebrow,
@@ -231,7 +243,7 @@ img {
 .hero-copy p,
 .section-head p {
   margin: 0;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.9;
 }
 
@@ -1046,11 +1058,6 @@ html[dir="ltr"] .form-row label {
                         <span id="stateLabel">الولاية</span>
                         <select id="stateSelect" class="form-select" name="state" required></select>
                     </label>
-
-                    <label>
-                        <span id="cityLabel">البلدية</span>
-                        <select id="citySelect" class="form-select" name="city" required></select>
-                    </label>
                 </div>
 
                 <p id="requestStatus" class="validation-message"></p>
@@ -1085,7 +1092,6 @@ html[dir="ltr"] .form-row label {
                 fullNameLabel: "الاسم الكامل",
                 phoneLabel: "رقم الهاتف",
                 stateLabel: "الولاية",
-                cityLabel: "البلدية",
                 submitRequest: "إرسال الطلب",
                 submitting: "جارٍ إرسال الطلب...",
                 emptyState: "لا توجد نتائج مطابقة للبحث الحالي.",
@@ -1115,7 +1121,6 @@ html[dir="ltr"] .form-row label {
                 },
                 roomCapacityText: "أشخاص في الغرفة",
                 statePlaceholder: "اختر الولاية",
-                cityPlaceholder: "اختر البلدية",
                 validation: {
                     peopleRequired: "يرجى إدخال عدد الأشخاص.",
                     quadMinimum: "الغرفة الرباعية يمكن أن تبدأ من شخص واحد، وبعدها يمكن الزيادة بفرد واحد مع حساب الغرف تلقائياً. كل 4 أشخاص تضيف غرفة واحدة.",
@@ -1149,7 +1154,6 @@ html[dir="ltr"] .form-row label {
                 fullNameLabel: "Nom complet",
                 phoneLabel: "Numero de telephone",
                 stateLabel: "Wilaya",
-                cityLabel: "Commune",
                 submitRequest: "Envoyer la demande",
                 submitting: "Envoi en cours...",
                 emptyState: "Aucun resultat ne correspond a votre recherche.",
@@ -1179,7 +1183,6 @@ html[dir="ltr"] .form-row label {
                 },
                 roomCapacityText: "personnes par chambre",
                 statePlaceholder: "Choisir la wilaya",
-                cityPlaceholder: "Choisir la commune",
                 validation: {
                     peopleRequired: "Veuillez saisir le nombre de personnes.",
                     quadMinimum: "La chambre quadruple peut commencer a partir d'une personne, puis l'ajout se fait personne par personne avec calcul automatique des chambres. Une chambre est ajoutee pour chaque groupe de 4 personnes.",
@@ -1195,64 +1198,17 @@ html[dir="ltr"] .form-row label {
         let offers = [];
 
         const algerianLocations = {
-            "أدرار": ["أدرار", "تيميمون", "أولف"],
-            "الشلف": ["الشلف", "تنس", "بوقادير"],
-            "الأغواط": ["الأغواط", "أفلو", "قصر الحيران"],
-            "أم البواقي": ["أم البواقي", "عين البيضاء", "عين مليلة"],
-            "باتنة": ["باتنة", "بريكة", "نقاوس"],
-            "بجاية": ["بجاية", "أقبو", "خراطة"],
-            "بسكرة": ["بسكرة", "طولقة", "أورلال"],
-            "بشار": ["بشار", "العبادلة", "بني ونيف"],
-            "البليدة": ["البليدة", "بوفاريك", "العفرون"],
-            "البويرة": ["البويرة", "سور الغزلان", "الأخضرية"],
-            "تمنراست": ["تمنراست", "إن صالح", "إن قزام"],
-            "تبسة": ["تبسة", "الونزة", "الشريعة"],
-            "تلمسان": ["تلمسان", "مغنية", "ندرومة"],
-            "تيارت": ["تيارت", "السوقر", "فرندة"],
-            "تيزي وزو": ["تيزي وزو", "ذراع الميزان", "عزازقة"],
-            "الجزائر": ["الجزائر الوسطى", "باب الزوار", "الدار البيضاء"],
-            "الجلفة": ["الجلفة", "مسعد", "عين وسارة"],
-            "جيجل": ["جيجل", "الطاهير", "ميلة"],
-            "سطيف": ["سطيف", "العلمة", "عين ولمان"],
-            "سعيدة": ["سعيدة", "عين الحجر", "الحساسنة"],
-            "سكيكدة": ["سكيكدة", "الحروش", "عزابة"],
-            "سيدي بلعباس": ["سيدي بلعباس", "تلاغ", "بن باديس"],
-            "عنابة": ["عنابة", "الحجار", "البوني"],
-            "قالمة": ["قالمة", "بوشقوف", "حمام دباغ"],
-            "قسنطينة": ["قسنطينة", "الخروب", "عين عبيد"],
-            "المدية": ["المدية", "البرواقية", "قصر البخاري"],
-            "مستغانم": ["مستغانم", "عين تادلس", "سيدي علي"],
-            "المسيلة": ["المسيلة", "بوسعادة", "عين الملح"],
-            "معسكر": ["معسكر", "غريس", "تيغنيف"],
-            "ورقلة": ["ورقلة", "الرويسات", "تقرت"],
-            "وهران": ["وهران", "السانية", "أرزيو"],
-            "البيض": ["البيض", "بريزينة", "الأبيض سيدي الشيخ"],
-            "إليزي": ["إليزي", "جانت", "دبداب"],
-            "برج بوعريريج": ["برج بوعريريج", "رأس الوادي", "المنصورة"],
-            "بومرداس": ["بومرداس", "دلس", "برج منايل"],
-            "الطارف": ["الطارف", "القالة", "بن مهيدي"],
-            "تندوف": ["تندوف", "أم العسل", "حاسي خبي"],
-            "تيسمسيلت": ["تيسمسيلت", "ثنية الحد", "برج الأمير عبد القادر"],
-            "الوادي": ["الوادي", "قمار", "الرباح"],
-            "خنشلة": ["خنشلة", "قايس", "ششار"],
-            "سوق أهراس": ["سوق أهراس", "تاورة", "سدراتة"],
-            "تيبازة": ["تيبازة", "شرشال", "القليعة"],
-            "ميلة": ["ميلة", "شلغوم العيد", "فرجيوة"],
-            "عين الدفلى": ["عين الدفلى", "خميس مليانة", "جندل"],
-            "النعامة": ["النعامة", "عين الصفراء", "مشرية"],
-            "عين تموشنت": ["عين تموشنت", "بني صاف", "حمام بوحجر"],
-            "غرداية": ["غرداية", "بريان", "متليلي"],
-            "غليزان": ["غليزان", "وادي رهيو", "مازونة"],
-            "تيميمون": ["تيميمون", "أوقروت", "تسابيت"],
-            "برج باجي مختار": ["برج باجي مختار", "تيمياوين"],
-            "أولاد جلال": ["أولاد جلال", "الشعيبة", "رأس الميعاد"],
-            "بني عباس": ["بني عباس", "كرزاز", "تامترت"],
-            "عين صالح": ["عين صالح", "فقارة الزوى", "إن غار"],
-            "عين قزام": ["عين قزام", "تين زواتين"],
-            "تقرت": ["تقرت", "النزلة", "تماسين"],
-            "جانت": ["جانت", "برج الحواس"],
-            "المغير": ["المغير", "جامعة", "سيدي عمران"],
-            "المنيعة": ["المنيعة", "حاسي القارة"]
+            "الشلف": [],
+            "تلمسان": [],
+            "سعيدة": [],
+            "سيدي بلعباس": [],
+            "مستغانم": [],
+            "معسكر": [],
+            "وهران": [],
+            "البيض": [],
+            "النعامة": [],
+            "عين تموشنت": [],
+            "غليزان": []
         };
 
         const roomTypes = [
@@ -1374,7 +1330,6 @@ html[dir="ltr"] .form-row label {
         const requestSummary = document.getElementById("requestSummary");
         const requestStatus = document.getElementById("requestStatus");
         const stateSelect = document.getElementById("stateSelect");
-        const citySelect = document.getElementById("citySelect");
         const submitRequestBtn = document.getElementById("submitRequestBtn");
         const langArBtn = document.getElementById("langArBtn");
         const langFrBtn = document.getElementById("langFrBtn");
@@ -1464,7 +1419,6 @@ html[dir="ltr"] .form-row label {
             document.getElementById("fullNameLabel").textContent = lang.fullNameLabel;
             document.getElementById("phoneLabel").textContent = lang.phoneLabel;
             document.getElementById("stateLabel").textContent = lang.stateLabel;
-            document.getElementById("cityLabel").textContent = lang.cityLabel;
             submitRequestBtn.textContent = lang.submitRequest;
             langArBtn.classList.toggle("active", state.language === "ar");
             langFrBtn.classList.toggle("active", state.language === "fr");
@@ -1639,13 +1593,6 @@ html[dir="ltr"] .form-row label {
             const states = Object.keys(algerianLocations);
             stateSelect.innerHTML = `<option value="">${t("statePlaceholder")}</option>` +
                 states.map((item) => `<option value="${item}">${item}</option>`).join("");
-            citySelect.innerHTML = `<option value="">${t("cityPlaceholder")}</option>`;
-        }
-
-        function populateCities(selectedState) {
-            const cities = algerianLocations[selectedState] || [];
-            citySelect.innerHTML = `<option value="">${t("cityPlaceholder")}</option>` +
-                cities.map((item) => `<option value="${item}">${item}</option>`).join("");
         }
 
         function submitToGoogleSheets(payload) {
@@ -1730,10 +1677,6 @@ html[dir="ltr"] .form-row label {
             }
         });
 
-        stateSelect.addEventListener("change", (event) => {
-            populateCities(event.target.value);
-        });
-
         document.getElementById("requestForm").addEventListener("submit", async (event) => {
             event.preventDefault();
 
@@ -1748,11 +1691,10 @@ html[dir="ltr"] .form-row label {
                 fullName: document.getElementById("fullName").value.trim(),
                 phoneNumber: document.getElementById("phoneNumber").value.trim(),
                 state: stateSelect.value,
-                city: citySelect.value,
                 submittedAt: new Date().toISOString()
             };
 
-            if (!payload.fullName || !payload.phoneNumber || !payload.state || !payload.city) {
+            if (!payload.fullName || !payload.phoneNumber || !payload.state) {
                 requestStatus.classList.remove("success");
                 requestStatus.textContent = t("validation", "formRequired");
                 return;
