@@ -18,6 +18,7 @@ const SHEET_HEADERS = [
   'Full Name',
   'Phone Number',
   'State',
+  'Category',
   'Offer ID',
   'Offer Name',
   'Travel Date',
@@ -105,8 +106,33 @@ function getOffers() {
   });
 }
 
+/**
+ * تتحقق مما إذا كان رقم الهاتف مسجلاً مسبقاً في جدول الحجوزات
+ */
+function checkDuplicatePhone(phoneNumber) {
+  const spreadsheet = getSpreadsheet_();
+  const sheet = spreadsheet.getSheetByName(SHEETS_CONFIG.sheetName);
+  if (!sheet) return false;
+  
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return false;
+
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const phoneIndex = headers.indexOf('Phone Number');
+  if (phoneIndex === -1) return false;
+
+  const values = sheet.getRange(2, phoneIndex + 1, lastRow - 1, 1).getValues();
+  const searchPhone = String(phoneNumber).trim();
+
+  return values.some(row => String(row[0]).trim() === searchPhone);
+}
+
 function submitBooking(payload) {
   validatePayload_(payload);
+  
+  if (checkDuplicatePhone(payload.phoneNumber)) {
+    throw new Error("DUPLICATE_PHONE");
+  }
 
   const sheet = getOrCreateSheet_();
   ensureHeaders_(sheet);
@@ -118,6 +144,7 @@ function submitBooking(payload) {
     normalizedPayload.fullName,
     normalizedPayload.phoneNumber,
     normalizedPayload.state,
+    normalizedPayload.category,
     normalizedPayload.offerId,
     normalizedPayload.offerName,
     normalizedPayload.date,
@@ -185,6 +212,7 @@ function validatePayload_(payload) {
     'fullName',
     'phoneNumber',
     'state',
+    'category',
     'offerId',
     'offerName',
     'date',
@@ -222,6 +250,7 @@ function normalizePayload_(payload) {
     fullName: stringifyValue_(payload.fullName),
     phoneNumber: stringifyValue_(payload.phoneNumber),
     state: stringifyValue_(payload.state),
+    category: stringifyValue_(payload.category),
     offerId: payload.offerId,
     offerName: stringifyValue_(payload.offerName),
     date: stringifyValue_(payload.date),

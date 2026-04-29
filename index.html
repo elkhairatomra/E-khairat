@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
 :root {
   --bg: #f8fafc;
@@ -136,7 +137,56 @@ img {
   backdrop-filter: blur(20px);
   padding: 10px;
   border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 4px;
+}
+
+.chip-checkbox {
+  display: none;
+}
+
+.chip-label {
+  padding: 10px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  user-select: none;
+}
+
+.chip-checkbox:checked + .chip-label {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(255, 135, 22, 0.3);
+  transform: translateY(-2px) scale(1.02);
+}
+
+@keyframes revealCard {
+  0% { 
+    opacity: 0; 
+    transform: translateY(30px) scale(0.9);
+    filter: blur(10px);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-reveal {
+  animation: revealCard 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  opacity: 0;
 }
 
 .lang-switch {
@@ -288,7 +338,7 @@ img {
 .offer-card-inner {
   display: grid;
   height: 100%;
-  min-height: 628px;
+  min-height: 480px;
   transform-style: preserve-3d;
   transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -361,6 +411,7 @@ img {
   margin: 0;
 }
 
+.offer-card-front .price-grid,
 .offer-card-back .price-grid {
   margin: 0;
 }
@@ -597,6 +648,7 @@ img {
   padding: 14px 22px;
   border-radius: 18px;
   color: #fff;
+  text-decoration: none;
   font-weight: 700;
   background: linear-gradient(135deg, var(--accent), #ffa64c);
   transition: transform 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
@@ -643,6 +695,7 @@ img {
   border-radius: 32px;
   animation: modal-in 220ms ease;
 }
+.modal-panel { overflow: visible; } /* Ensure dropdown options are not clipped */
 
 .modal-panel.large {
   width: min(100%, 860px);
@@ -735,7 +788,7 @@ img {
 }
 
 .form-row input,
-.form-grid input,
+.form-grid input:not([type="checkbox"]),
 .form-grid select {
   min-height: 54px;
   padding: 12px 14px;
@@ -743,6 +796,8 @@ img {
   border-radius: 16px;
   outline: none;
   background: rgba(255, 255, 255, 0.92);
+  background-color: var(--surface-strong); /* Explicitly set solid background */
+  color: var(--text); /* Explicitly set dark text color */
 }
 
 .form-row .form-control:focus,
@@ -776,6 +831,7 @@ img {
   background: none;
   border: none;
   color: var(--muted);
+  text-decoration: none;
   font-size: 0.75rem;
   cursor: pointer;
   transition: color 0.2s;
@@ -834,6 +890,63 @@ img {
   gap: 14px;
 }
 
+.state-field {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.state-field legend {
+  padding: 0;
+  margin: 0;
+  font-weight: 700;
+}
+
+.state-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 2px 2px 6px;
+}
+
+.form-grid .state-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  cursor: pointer;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.72);
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.state-option:hover,
+.state-option:has(input:checked) {
+  border-color: rgba(255, 135, 22, 0.42);
+  background: rgba(255, 135, 22, 0.11);
+  transform: translateY(-1px);
+}
+
+.state-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+
+.state-option span {
+  line-height: 1.4;
+}
+
 .validation-message {
   min-height: 24px;
   margin: 0;
@@ -872,6 +985,76 @@ html[dir="ltr"] .room-card,
 html[dir="ltr"] .form-grid label,
 html[dir="ltr"] .form-row label {
   text-align: left;
+}
+
+.section {
+  position: relative;
+}
+
+.section-dark-blue {
+  background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+  color: #ffffff;
+  padding: 80px 24px;
+  border-radius: var(--radius-xl);
+  margin: 40px 0;
+  box-shadow: var(--shadow);
+}
+
+.section-dark-blue .section-kicker {
+  color: #ffb36f;
+  background: rgba(255, 135, 22, 0.16);
+  border: 1px solid rgba(255, 135, 22, 0.24);
+}
+
+.content-center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-dark-blue p {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 16px auto 32px;
+}
+
+.site-footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 40px 24px;
+  border-top: 1px solid var(--line);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.social-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: var(--surface-strong);
+  color: var(--primary);
+  font-size: 1.4rem;
+  transition: all 0.2s ease;
+  border: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.social-btn:hover {
+  background: linear-gradient(135deg, var(--accent), #ffa64c);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(255, 135, 22, 0.2);
 }
 
 @keyframes modal-in {
@@ -995,7 +1178,7 @@ html[dir="ltr"] .form-row label {
   }
 
   .offer-card-inner {
-    min-height: 610px;
+    min-height: 700px;
   }
 
   .offer-card-face {
@@ -1090,7 +1273,7 @@ html[dir="ltr"] .form-row label {
   }
 
   .offer-card-inner {
-    min-height: 590px;
+    min-height: 680px;
   }
 
   .offer-card-back {
@@ -1159,15 +1342,24 @@ html[dir="ltr"] .form-row label {
                         <input id="hotelSearch" class="form-control" type="search" placeholder="ابحث عن فندق">
                     </label>
 
-                    <label class="select-shell">
-                        <span id="categoryLabel">فئات العروض</span>
-                        <select id="categoryFilter" class="form-select">
-                            <option value="all">جميع العروض</option>
-                            <option value="Economy">اقتصادي</option>
-                            <option value="Premium">مميز</option>
-                            <option value="VIP">VIP</option>
-                        </select>
+                    <label class="input-shell">
+                        <span class="icon">📅</span>
+                        <input id="dateFilter" class="form-control" type="search" placeholder="بحث بالتاريخ">
                     </label>
+
+                    <div class="category-chips" id="categoryFilterGroup">
+                        <input type="checkbox" id="catAll" class="chip-checkbox" value="all" checked>
+                        <label for="catAll" class="chip-label" id="labelAll">جميع العروض</label>
+                        
+                        <input type="checkbox" id="catEconomy" class="chip-checkbox" value="Economy">
+                        <label for="catEconomy" class="chip-label" id="labelEconomy">اقتصادي</label>
+                        
+                        <input type="checkbox" id="catPremium" class="chip-checkbox" value="Premium">
+                        <label for="catPremium" class="chip-label" id="labelPremium">مميز</label>
+                        
+                        <input type="checkbox" id="catVIP" class="chip-checkbox" value="VIP">
+                        <label for="catVIP" class="chip-label" id="labelVIP">VIP</label>
+                    </div>
                 </div>
             </nav>
 
@@ -1191,18 +1383,27 @@ html[dir="ltr"] .form-row label {
             </section>
 
             <section id="offersGrid" class="offers-grid" aria-live="polite"></section>
+
+            <section class="section section-dark-blue content-center">
+                <span class="section-kicker">لماذا تختارنا؟</span>
+                <h2>خدمة متميزة في كل خطوة</h2>
+                <p>
+                    نحن نضمن لك الراحة التامة خلال رحلتك الإيمانية من خلال اختيار أفضل الفنادق وأقربها للحرمين الشريفين، مع مرافقة تقنية تسهل عليك عملية الحجز والمتابعة.
+                </p>
+                <a href="tel:+213560515258" class="primary-btn btn">تواصل معنا الآن</a>
+            </section>
         </main>
 
-        <nav class="bottom-nav">
-            <button class="nav-item active" onclick="window.scrollTo(0,0)">
-                <span class="icon">🏠</span><span id="navHome">الرئيسية</span>
-            </button>
-            <button class="nav-item" onclick="document.getElementById('offersGrid').scrollIntoView()">
-                <span class="icon">🕋</span><span id="navOffers">العروض</span>
-            </button>
-            <button class="nav-item" onclick="window.location.href='tel:0555555555'">
-                <span class="icon">📞</span><span id="navContact">تواصل</span>
-            </button>
+        <footer class="site-footer">
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100088810332191" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="https://wa.me/213560515258" class="social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@elkhadpphzn?is_from_webapp=1&sender_device=pc" class="social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a>
+            </div>
+            <p id="footerRights">© 2026 الخيرات للسياحة والأسفار. جميع الحقوق محفوظة.</p>
+        </footer>
+
         </nav>
     </div>
 
@@ -1264,10 +1465,10 @@ html[dir="ltr"] .form-row label {
                         <input id="phoneNumber" class="form-control" name="phoneNumber" type="tel" required>
                     </label>
 
-                    <label>
-                        <span id="stateLabel">الولاية</span>
-                        <select id="stateSelect" class="form-select" name="state" required></select>
-                    </label>
+                    <fieldset class="state-field">
+                        <legend id="stateLabel">الولاية</legend>
+                        <div id="stateOptions" class="state-options" aria-labelledby="stateLabel"></div>
+                    </fieldset>
                 </div>
 
                 <p id="requestStatus" class="validation-message"></p>
@@ -1283,6 +1484,7 @@ html[dir="ltr"] .form-row label {
                 dir: "rtl",
                 brandSubtitle: "وكالة سفر متخصصة في العمرة",
                 searchPlaceholder: "ابحث عن فندق",
+                dateFilterPlaceholder: "بحث بالتاريخ",
                 categoryLabel: "فئات العروض",
                 categories: { all: "جميع العروض", Economy: "اقتصادي", Premium: "مميز", VIP: "VIP" },
                 heroEyebrow: "رحلات عمرة منظمة بعناية",
@@ -1316,7 +1518,7 @@ html[dir="ltr"] .form-row label {
                     from: "السعر يبدأ من"
                 },
                 getOffer: "احصل على العرض",
-                flipPrices: "أسعار الغرف",
+                flipPrices: "تفاصيل العرض",
                 flipBack: "رجوع",
                 summary: {
                     offer: "العرض",
@@ -1336,20 +1538,23 @@ html[dir="ltr"] .form-row label {
                 },
                 roomCapacityText: "أشخاص في الغرفة",
                 statePlaceholder: "اختر الولاية",
+                footerRights: "© 2024 الخيرات للسياحة والأسفار. جميع الحقوق محفوظة.",
                 validation: {
                     peopleRequired: "يرجى إدخال عدد الأشخاص.",
                     quadMinimum: "الغرفة الرباعية يمكن أن تبدأ من شخص واحد، وبعدها يمكن الزيادة بفرد واحد مع حساب الغرف تلقائياً. كل 4 أشخاص تضيف غرفة واحدة.",
                     multiple: "عدد الأشخاص غير متوافق مع الغرفة {room}. القيم المسموحة: {values}",
                     bookingMissing: "لم يتم العثور على بيانات الحجز.",
                     formRequired: "يرجى ملء جميع البيانات المطلوبة قبل الإرسال.",
-                    submitError: "تعذر إرسال الطلب إلى Google Sheets. تحقق من إعدادات الملف أو صلاحيات Google Apps Script.",
-                    submitSuccess: "تم إرسال الطلب بنجاح. سنقوم بالتواصل معكم قريباً."
+                    submitError: "تعذر إرسال الطلب إلى . تحقق من إعدادات الملف أو الصلاحيات .",
+                    submitSuccess: "تم إرسال الطلب بنجاح. سنقوم بالتواصل معكم قريباً.",
+                    duplicatePhone: "الرقم هذا مسجل من قبل انتظر الاتصال في اقرب الاجال"
                 }
             },
             fr: {
                 dir: "ltr",
                 brandSubtitle: "Agence de voyage specialisee en Omra",
                 searchPlaceholder: "Rechercher un hotel",
+                dateFilterPlaceholder: "Filtrer par date",
                 categoryLabel: "Categories d'offres",
                 categories: { all: "Toutes les offres", Economy: "Economy", Premium: "Premium", VIP: "VIP" },
                 heroEyebrow: "Voyages Omra soigneusement organises",
@@ -1375,7 +1580,7 @@ html[dir="ltr"] .form-row label {
                 offerMeta: {
                     navHome: "Accueil",
                     navOffers: "Offres",
-                    navContact: "Contact",
+                    navContact: "0560515258",
                     date: "Date de voyage",
                     makkah: "Hotel a La Mecque",
                     madinah: "Hotel a Medine",
@@ -1383,7 +1588,7 @@ html[dir="ltr"] .form-row label {
                     from: "A partir de"
                 },
                 getOffer: "Voir l'offre",
-                flipPrices: "Tarifs",
+                flipPrices: "Details",
                 flipBack: "Retour",
                 summary: {
                     offer: "Offre",
@@ -1403,6 +1608,7 @@ html[dir="ltr"] .form-row label {
                 },
                 roomCapacityText: "personnes par chambre",
                 statePlaceholder: "Choisir la wilaya",
+                footerRights: "© 2024 E-Khairat Tourisme & Voyages. Tous droits réservés.",
                 validation: {
                     peopleRequired: "Veuillez saisir le nombre de personnes.",
                     quadMinimum: "La chambre quadruple peut commencer a partir d'une personne, puis l'ajout se fait personne par personne avec calcul automatique des chambres. Une chambre est ajoutee pour chaque groupe de 4 personnes.",
@@ -1410,7 +1616,8 @@ html[dir="ltr"] .form-row label {
                     bookingMissing: "Aucune donnee de reservation n'a ete trouvee.",
                     formRequired: "Veuillez remplir tous les champs obligatoires avant l'envoi.",
                     submitError: "Impossible d'envoyer la demande vers Google Sheets. Verifiez la configuration du fichier ou les autorisations Google Apps Script.",
-                    submitSuccess: "La demande a ete envoyee avec succes. Nous vous contacterons bientot."
+                    submitSuccess: "La demande a ete envoyee avec succes. Nous vous contacterons bientot.",
+                    duplicatePhone: "Ce numéro est déjà enregistré. Veuillez attendre notre appel prochainement."
                 }
             }
         };
@@ -1420,6 +1627,8 @@ html[dir="ltr"] .form-row label {
         const algerianLocations = {
             "الشلف": [],
             "تلمسان": [],
+            "تيارت": [],
+            "تيسمسيلت": [],
             "سعيدة": [],
             "سيدي بلعباس": [],
             "مستغانم": [],
@@ -1538,7 +1747,8 @@ html[dir="ltr"] .form-row label {
 
         const offersGrid = document.getElementById("offersGrid");
         const hotelSearch = document.getElementById("hotelSearch");
-        const categoryFilter = document.getElementById("categoryFilter");
+        const dateFilter = document.getElementById("dateFilter");
+        const categoryCheckboxes = document.querySelectorAll(".chip-checkbox");
         const bookingModal = document.getElementById("bookingModal");
         const requestModal = document.getElementById("requestModal");
         const bookingOfferName = document.getElementById("bookingOfferName");
@@ -1549,7 +1759,7 @@ html[dir="ltr"] .form-row label {
         const bookingValidation = document.getElementById("bookingValidation");
         const requestSummary = document.getElementById("requestSummary");
         const requestStatus = document.getElementById("requestStatus");
-        const stateSelect = document.getElementById("stateSelect");
+        const stateOptions = document.getElementById("stateOptions");
         const submitRequestBtn = document.getElementById("submitRequestBtn");
         const langArBtn = document.getElementById("langArBtn");
         const langFrBtn = document.getElementById("langFrBtn");
@@ -1617,11 +1827,12 @@ html[dir="ltr"] .form-row label {
 
             document.getElementById("brandSubtitle").textContent = lang.brandSubtitle;
             hotelSearch.placeholder = lang.searchPlaceholder;
-            document.getElementById("categoryLabel").textContent = lang.categoryLabel;
-            document.querySelector('#categoryFilter option[value="all"]').textContent = lang.categories.all;
-            document.querySelector('#categoryFilter option[value="Economy"]').textContent = lang.categories.Economy;
-            document.querySelector('#categoryFilter option[value="Premium"]').textContent = lang.categories.Premium;
-            document.querySelector('#categoryFilter option[value="VIP"]').textContent = lang.categories.VIP;
+            dateFilter.placeholder = lang.dateFilterPlaceholder;
+            document.getElementById("labelAll").textContent = lang.categories.all;
+            document.getElementById("labelEconomy").textContent = lang.categories.Economy;
+            document.getElementById("labelPremium").textContent = lang.categories.Premium;
+            document.getElementById("labelVIP").textContent = lang.categories.VIP;
+
             document.getElementById("heroEyebrow").textContent = lang.heroEyebrow;
             document.getElementById("heroTitle").textContent = lang.heroTitle;
             document.getElementById("heroText").textContent = lang.heroText;
@@ -1644,6 +1855,7 @@ html[dir="ltr"] .form-row label {
             document.getElementById("navHome").textContent = lang.offerMeta.navHome;
             document.getElementById("navOffers").textContent = lang.offerMeta.navOffers;
             document.getElementById("navContact").textContent = lang.offerMeta.navContact;
+            document.getElementById("footerRights").textContent = lang.footerRights;
 
             langArBtn.classList.toggle("active", state.language === "ar");
             langFrBtn.classList.toggle("active", state.language === "fr");
@@ -1655,24 +1867,23 @@ html[dir="ltr"] .form-row label {
                 return;
             }
 
-            offersGrid.innerHTML = list.map((offer) => `
-                <article class="offer-card card h-100 border-0" data-flip-card>
+            offersGrid.innerHTML = list.map((offer, index) => `
+                <article class="offer-card card h-100 border-0 animate-reveal" data-flip-card style="animation-delay: ${index * 0.1}s">
                     <div class="offer-card-inner">
                         <div class="offer-card-face offer-card-front">
                             <div class="offer-media">
                                 <img src="${offer.image || 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80'}" alt="${localizeField(offer.name)}">
-                                <span class="offer-badge">${t("categories", offer.category)}</span>
                             </div>
                             <div class="offer-body">
-                                <h3>${localizeField(offer.name)}</h3>
-                                <p class="offer-caption">${t("offerMeta", "date")} ${localizeField(offer.date)} • ${t("offerMeta", "airport")} ${localizeField(offer.airport)}</p>
+                                <p class="offer-caption" style="font-weight: 800; color: var(--accent); font-size: 1.1rem; margin-bottom: 12px;">
+                                    <i class="bi bi-calendar-check"></i> ${localizeField(offer.date)}
+                                </p>
                                 <ul class="offer-meta">
                                     <li><span>${t("offerMeta", "makkah")}</span><strong>${localizeField(offer.makkahHotel)}</strong></li>
                                     <li><span>${t("offerMeta", "madinah")}</span><strong>${localizeField(offer.madinahHotel)}</strong></li>
                                 </ul>
-                                <div class="offer-footer">
-                                    <button class="flip-btn btn" type="button" data-flip-toggle aria-pressed="false">${t("flipPrices")}</button>
-                                    <span class="price-note">${t("offerMeta", "from")} ${formatDzd(offer.priceFrom)}</span>
+                                <div class="offer-footer" style="border-top: none; padding-top: 10px;">
+                                    <button class="primary-btn btn w-100" type="button" data-offer-id="${offer.id}">${t("getOffer")}</button>
                                 </div>
                             </div>
                         </div>
@@ -1704,17 +1915,22 @@ html[dir="ltr"] .form-row label {
 
         function getFilteredOffers() {
             const query = hotelSearch.value.trim().toLowerCase();
-            const category = categoryFilter.value;
+            const dateQuery = dateFilter.value.trim().toLowerCase();
+            const selectedCats = Array.from(categoryCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
 
             return offers.filter((offer) => {
-                const matchesCategory = category === "all" || offer.category === category;
+                const matchesCategory = selectedCats.includes("all") || selectedCats.includes(offer.category);
                 const hotelText = [
                     localizeField(offer.makkahHotel),
                     localizeField(offer.madinahHotel),
                     localizeField(offer.name)
                 ].join(" ").toLowerCase();
                 const matchesQuery = !query || hotelText.includes(query);
-                return matchesCategory && matchesQuery;
+
+                const dateText = localizeField(offer.date).toLowerCase();
+                const matchesDate = !dateQuery || dateText.includes(dateQuery);
+
+                return matchesCategory && matchesQuery && matchesDate;
             });
         }
 
@@ -1804,6 +2020,7 @@ html[dir="ltr"] .form-row label {
             totalPriceValue.textContent = formatDzd(totalPrice);
 
             return {
+                category: state.activeOffer.category,
                 offerId: state.activeOffer.id,
                 offerName: localizeField(state.activeOffer.name),
                 date: localizeField(state.activeOffer.date),
@@ -1833,10 +2050,19 @@ html[dir="ltr"] .form-row label {
             `;
         }
 
+        function getSelectedState() {
+            const selectedState = stateOptions.querySelector('input[name="state"]:checked');
+            return selectedState ? selectedState.value : "";
+        }
+
         function populateStates() {
             const states = Object.keys(algerianLocations);
-            stateSelect.innerHTML = `<option value="">${t("statePlaceholder")}</option>` +
-                states.map((item) => `<option value="${item}">${item}</option>`).join("");
+            stateOptions.innerHTML = states.map((item) => `
+                <label class="state-option">
+                    <input type="checkbox" name="state" value="${item}">
+                    <span>${item}</span>
+                </label>
+            `).join("");
         }
 
         function submitToGoogleSheets(payload) {
@@ -1910,7 +2136,37 @@ html[dir="ltr"] .form-row label {
         });
 
         hotelSearch.addEventListener("input", () => renderOffers(getFilteredOffers()));
-        categoryFilter.addEventListener("change", () => renderOffers(getFilteredOffers()));
+        dateFilter.addEventListener("input", () => renderOffers(getFilteredOffers()));
+        
+        categoryCheckboxes.forEach(cb => {
+            cb.addEventListener("change", (e) => {
+                if (e.target.value === "all" && e.target.checked) {
+                    categoryCheckboxes.forEach(other => { if(other !== e.target) other.checked = false; });
+                } else if (e.target.checked) {
+                    document.getElementById("catAll").checked = false;
+                }
+                
+                // إذا لم يتم اختيار أي شيء، ارجع لـ "الكل" تلقائياً
+                const anyChecked = Array.from(categoryCheckboxes).some(c => c.checked);
+                if (!anyChecked) document.getElementById("catAll").checked = true;
+                
+                renderOffers(getFilteredOffers());
+            });
+        });
+
+        stateOptions.addEventListener("change", (event) => {
+            const selectedCheckbox = event.target.closest('input[name="state"]');
+            if (!selectedCheckbox || !selectedCheckbox.checked) {
+                return;
+            }
+
+            stateOptions.querySelectorAll('input[name="state"]').forEach((checkbox) => {
+                if (checkbox !== selectedCheckbox) {
+                    checkbox.checked = false;
+                }
+            });
+        });
+
         peopleCountInput.addEventListener("input", calculateBooking);
         langArBtn.addEventListener("click", () => setLanguage("ar"));
         langFrBtn.addEventListener("click", () => setLanguage("fr"));
@@ -1959,7 +2215,7 @@ html[dir="ltr"] .form-row label {
                 ...state.booking,
                 fullName: document.getElementById("fullName").value.trim(),
                 phoneNumber: document.getElementById("phoneNumber").value.trim(),
-                state: stateSelect.value,
+                state: getSelectedState(),
                 submittedAt: new Date().toISOString()
             };
 
@@ -1983,7 +2239,11 @@ html[dir="ltr"] .form-row label {
                 }, 1200);
             } catch (error) {
                 requestStatus.classList.remove("success");
-                requestStatus.textContent = error.message;
+                if (error.message === "DUPLICATE_PHONE") {
+                    requestStatus.textContent = t("validation", "duplicatePhone");
+                } else {
+                    requestStatus.textContent = error.message;
+                }
             } finally {
                 submitRequestBtn.disabled = false;
                 submitRequestBtn.textContent = t("submitRequest");
