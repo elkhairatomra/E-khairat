@@ -264,7 +264,7 @@ img {
   padding: 8px 0 10px;
 }
 
-.offer-card,
+.offer-card-face,
 .modal-panel,
 .summary-card,
 .empty-state {
@@ -276,13 +276,36 @@ img {
 
 .offer-card {
   position: relative;
-  overflow: hidden;
+  display: block;
+  overflow: visible;
   border-radius: 32px;
+  background: transparent;
+  perspective: 1400px;
   transform: translateY(0);
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
-.offer-card::before {
+.offer-card-inner {
+  display: grid;
+  height: 100%;
+  min-height: 628px;
+  transform-style: preserve-3d;
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.offer-card-face {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  grid-area: 1 / 1;
+  min-height: 100%;
+  overflow: hidden;
+  border-radius: 32px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.offer-card-face::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -290,9 +313,98 @@ img {
   pointer-events: none;
 }
 
-.offer-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 40px 110px rgba(15, 25, 45, 0.22);
+.offer-card-back {
+  justify-content: space-between;
+  padding: 22px;
+  transform: rotateY(180deg);
+}
+
+.offer-card.is-flipped .offer-card-inner {
+  transform: rotateY(180deg);
+}
+
+.offer-card-front .offer-body,
+.offer-card-back {
+  gap: 18px;
+}
+
+.offer-card-front .offer-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.offer-card-front .offer-footer,
+.offer-card-back .offer-footer {
+  margin-top: auto;
+}
+
+.offer-back-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.offer-back-head .flip-btn {
+  flex-shrink: 0;
+}
+
+.offer-back-head h3 {
+  margin: 0;
+  font-size: 1.28rem;
+  line-height: 1.35;
+}
+
+.offer-card-back .offer-caption,
+.offer-card-back .offer-meta {
+  margin: 0;
+}
+
+.offer-card-back .price-grid {
+  margin: 0;
+}
+
+.offer-card-back .offer-footer {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.offer-card-back .price-note {
+  text-align: center;
+  white-space: normal;
+}
+
+.flip-btn {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px 15px;
+  border-radius: 16px;
+  color: var(--primary-deep);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.62);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.flip-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .offer-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 40px 110px rgba(15, 25, 45, 0.22);
+  }
+
+  .offer-card:hover .offer-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .offer-card:hover .offer-media img {
+    transform: scale(1.04);
+  }
 }
 
 .offer-media {
@@ -311,10 +423,6 @@ img {
   transition: transform 320ms ease;
 }
 
-.offer-card:hover .offer-media img {
-  transform: scale(1.04);
-}
-
 .offer-badge {
   position: absolute;
   top: 18px;
@@ -325,7 +433,7 @@ img {
   font-weight: 700;
   background: rgba(255, 135, 22, 0.95);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 .offer-body {
@@ -335,7 +443,7 @@ img {
 .offer-body h3 {
   margin: 0 0 10px;
   font-size: 1.18rem;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 
 .offer-caption {
@@ -886,6 +994,22 @@ html[dir="ltr"] .form-row label {
     border-radius: 28px;
   }
 
+  .offer-card-inner {
+    min-height: 610px;
+  }
+
+  .offer-card-face {
+    border-radius: 28px;
+  }
+
+  .offer-card-back {
+    padding: 18px;
+  }
+
+  .offer-back-head {
+    align-items: flex-start;
+  }
+
   .offer-body {
     padding: 18px;
   }
@@ -965,6 +1089,24 @@ html[dir="ltr"] .form-row label {
     height: 205px;
   }
 
+  .offer-card-inner {
+    min-height: 590px;
+  }
+
+  .offer-card-back {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .offer-card-front .offer-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .offer-footer .price-note {
+    white-space: normal;
+  }
+
   .offer-body h3 {
     font-size: 1.15rem;
   }
@@ -982,6 +1124,15 @@ html[dir="ltr"] .form-row label {
   .primary-btn {
     padding: 14px 18px;
     border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offer-card,
+  .offer-card-inner,
+  .offer-media img,
+  .flip-btn {
+    transition: none;
   }
 }
     </style>
@@ -1165,6 +1316,8 @@ html[dir="ltr"] .form-row label {
                     from: "السعر يبدأ من"
                 },
                 getOffer: "احصل على العرض",
+                flipPrices: "أسعار الغرف",
+                flipBack: "رجوع",
                 summary: {
                     offer: "العرض",
                     date: "تاريخ السفر",
@@ -1230,6 +1383,8 @@ html[dir="ltr"] .form-row label {
                     from: "A partir de"
                 },
                 getOffer: "Voir l'offre",
+                flipPrices: "Tarifs",
+                flipBack: "Retour",
                 summary: {
                     offer: "Offre",
                     date: "Date de voyage",
@@ -1501,27 +1656,46 @@ html[dir="ltr"] .form-row label {
             }
 
             offersGrid.innerHTML = list.map((offer) => `
-                <article class="offer-card card h-100 border-0">
-                    <div class="offer-media">
-                        <img src="${offer.image || 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80'}" alt="${localizeField(offer.name)}">
-                        <span class="offer-badge">${t("categories", offer.category)}</span>
-                    </div>
-                    <div class="offer-body">
-                        <h3>${localizeField(offer.name)}</h3>
-                        <p class="offer-caption">${t("offerMeta", "date")} ${localizeField(offer.date)} • ${t("offerMeta", "airport")} ${localizeField(offer.airport)}</p>
-                        <ul class="offer-meta">
-                            <li><span>${t("offerMeta", "makkah")}</span><strong>${localizeField(offer.makkahHotel)}</strong></li>
-                            <li><span>${t("offerMeta", "madinah")}</span><strong>${localizeField(offer.madinahHotel)}</strong></li>
-                        </ul>
-                        <div class="price-grid">
-                            <div class="price-chip"><small>${t("roomLabels", "quintuple")}</small><strong>${formatDzd(offer.roomPrices.quintuple)}</strong></div>
-                            <div class="price-chip"><small>${t("roomLabels", "quadruple")}</small><strong>${formatDzd(offer.roomPrices.quadruple)}</strong></div>
-                            <div class="price-chip"><small>${t("roomLabels", "triple")}</small><strong>${formatDzd(offer.roomPrices.triple)}</strong></div>
-                            <div class="price-chip"><small>${t("roomLabels", "double")}</small><strong>${formatDzd(offer.roomPrices.double)}</strong></div>
+                <article class="offer-card card h-100 border-0" data-flip-card>
+                    <div class="offer-card-inner">
+                        <div class="offer-card-face offer-card-front">
+                            <div class="offer-media">
+                                <img src="${offer.image || 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80'}" alt="${localizeField(offer.name)}">
+                                <span class="offer-badge">${t("categories", offer.category)}</span>
+                            </div>
+                            <div class="offer-body">
+                                <h3>${localizeField(offer.name)}</h3>
+                                <p class="offer-caption">${t("offerMeta", "date")} ${localizeField(offer.date)} • ${t("offerMeta", "airport")} ${localizeField(offer.airport)}</p>
+                                <ul class="offer-meta">
+                                    <li><span>${t("offerMeta", "makkah")}</span><strong>${localizeField(offer.makkahHotel)}</strong></li>
+                                    <li><span>${t("offerMeta", "madinah")}</span><strong>${localizeField(offer.madinahHotel)}</strong></li>
+                                </ul>
+                                <div class="offer-footer">
+                                    <button class="flip-btn btn" type="button" data-flip-toggle aria-pressed="false">${t("flipPrices")}</button>
+                                    <span class="price-note">${t("offerMeta", "from")} ${formatDzd(offer.priceFrom)}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="offer-footer">
-                            <button class="primary-btn btn" type="button" data-offer-id="${offer.id}">${t("getOffer")}</button>
-                            <span class="price-note">${t("offerMeta", "from")} ${formatDzd(offer.priceFrom)}</span>
+                        <div class="offer-card-face offer-card-back">
+                            <div class="offer-back-head">
+                                <h3>${localizeField(offer.name)}</h3>
+                                <button class="flip-btn btn" type="button" data-flip-toggle aria-pressed="false" tabindex="-1">${t("flipBack")}</button>
+                            </div>
+                            <p class="offer-caption">${t("offerMeta", "date")} ${localizeField(offer.date)} • ${t("offerMeta", "airport")} ${localizeField(offer.airport)}</p>
+                            <div class="price-grid">
+                                <div class="price-chip"><small>${t("roomLabels", "quintuple")}</small><strong>${formatDzd(offer.roomPrices.quintuple)}</strong></div>
+                                <div class="price-chip"><small>${t("roomLabels", "quadruple")}</small><strong>${formatDzd(offer.roomPrices.quadruple)}</strong></div>
+                                <div class="price-chip"><small>${t("roomLabels", "triple")}</small><strong>${formatDzd(offer.roomPrices.triple)}</strong></div>
+                                <div class="price-chip"><small>${t("roomLabels", "double")}</small><strong>${formatDzd(offer.roomPrices.double)}</strong></div>
+                            </div>
+                            <ul class="offer-meta">
+                                <li><span>${t("offerMeta", "makkah")}</span><strong>${localizeField(offer.makkahHotel)}</strong></li>
+                                <li><span>${t("offerMeta", "madinah")}</span><strong>${localizeField(offer.madinahHotel)}</strong></li>
+                            </ul>
+                            <div class="offer-footer">
+                                <button class="primary-btn btn" type="button" data-offer-id="${offer.id}" tabindex="-1">${t("getOffer")}</button>
+                                <span class="price-note">${t("offerMeta", "from")} ${formatDzd(offer.priceFrom)}</span>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -1681,7 +1855,32 @@ html[dir="ltr"] .form-row label {
             });
         }
 
+        function setOfferCardFlip(card, isFlipped) {
+            if (!card) {
+                return;
+            }
+
+            card.classList.toggle("is-flipped", isFlipped);
+            card.querySelectorAll("[data-flip-toggle]").forEach((button) => {
+                button.setAttribute("aria-pressed", String(isFlipped));
+            });
+            card.querySelectorAll(".offer-card-front button").forEach((button) => {
+                button.tabIndex = isFlipped ? -1 : 0;
+            });
+            card.querySelectorAll(".offer-card-back button").forEach((button) => {
+                button.tabIndex = isFlipped ? 0 : -1;
+            });
+        }
+
         offersGrid.addEventListener("click", (event) => {
+            const flipButton = event.target.closest("[data-flip-toggle]");
+            if (flipButton) {
+                event.preventDefault();
+                const card = flipButton.closest("[data-flip-card]");
+                setOfferCardFlip(card, card ? !card.classList.contains("is-flipped") : false);
+                return;
+            }
+
             const button = event.target.closest("[data-offer-id]");
             if (button) {
                 event.preventDefault();
