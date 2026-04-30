@@ -7,7 +7,11 @@ function doGet() {
 }
 
 const SHEETS_CONFIG = {
-  spreadsheetId: '', // اتركه فارغاً ليعتمد تلقائياً على الملف النشط المرتبط بالسكربت
+  // إذا كان السكربت مرتبطاً بجدول بيانات معين (Container-bound script)،
+  // اتركه فارغاً ليعتمد تلقائياً على الملف النشط.
+  // إذا كان السكربت تطبيق ويب مستقلاً (Standalone Web App)،
+  // يجب عليك وضع معرف جدول البيانات هنا (مثال: '1AbC_xyz123...')
+  spreadsheetId: '',
   sheetName: 'Reservations',
   offersSheetName: 'Offers',
   offersSheetId: 734149518
@@ -17,7 +21,9 @@ const SHEET_HEADERS = [
   'Submitted At',
   'Full Name',
   'Phone Number',
+  'Email',
   'State',
+  'Category',
   'Offer ID',
   'Offer Name',
   'Travel Date',
@@ -105,8 +111,33 @@ function getOffers() {
   });
 }
 
+/**
+ * تتحقق مما إذا كان رقم الهاتف مسجلاً مسبقاً في جدول الحجوزات
+ */
+function checkDuplicatePhone(phoneNumber) {
+  const spreadsheet = getSpreadsheet_();
+  const sheet = spreadsheet.getSheetByName(SHEETS_CONFIG.sheetName);
+  if (!sheet) return false;
+  
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return false;
+
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const phoneIndex = headers.indexOf('Phone Number');
+  if (phoneIndex === -1) return false;
+
+  const values = sheet.getRange(2, phoneIndex + 1, lastRow - 1, 1).getValues();
+  const searchPhone = String(phoneNumber).trim();
+
+  return values.some(row => String(row[0]).trim() === searchPhone);
+}
+
 function submitBooking(payload) {
   validatePayload_(payload);
+  
+  if (checkDuplicatePhone(payload.phoneNumber)) {
+    throw new Error("DUPLICATE_PHONE");
+  }
 
   const sheet = getOrCreateSheet_();
   ensureHeaders_(sheet);
@@ -117,7 +148,9 @@ function submitBooking(payload) {
     submittedAt,
     normalizedPayload.fullName,
     normalizedPayload.phoneNumber,
+    normalizedPayload.email,
     normalizedPayload.state,
+    normalizedPayload.category,
     normalizedPayload.offerId,
     normalizedPayload.offerName,
     normalizedPayload.date,
@@ -132,9 +165,33 @@ function submitBooking(payload) {
     normalizedPayload.totalPrice
   ]);
 
+  // إرسال رسالة تأكيد آلية للزبون عبر البريد الإلكتروني (بدون تدخل)
+  try {
+    const customerSubject = "تأكيد طلب حجز عمرة - وكالة الخيرات";
+    const customerMessage = `مرحباً ${normalizedPayload.fullName}،\n\nلقد تم استلام طلب حجزك بنجاح.\n\nتفاصيل العرض: ${normalizedPayload.offerName}\nتاريخ الرحلة: ${normalizedPayload.date}\nالسعر الإجمالي: ${normalizedPayload.totalPrice} DZD\n\nسنقوم بالاتصال بك قريباً لتأكيد باقي الإجراءات.\nشكراً لاختيارك وكالة الخيرات.`;
+    
+    MailApp.sendEmail(normalizedPayload.email, customerSubject, customerMessage);
+  } catch (error) {
+    console.error("Error sending confirmation email: " + error.toString());
+  }
+
+  // إنشاء رسالة رسمية تظهر للزبون عند فتح الواتساب
+  const whatsappMessage = 
+    `*تأكيد استلام طلب حجز - وكالة الخيرات*\n\n` +
+    `مرحباً *${normalizedPayload.fullName}*،\n` +
+    `لقد تم تسجيل طلبكم بنجاح في نظامنا.\n\n` +
+    `*تفاصيل الحجز:*\n` +
+    `• الباقة: ${normalizedPayload.offerName}\n` +
+    `• التاريخ: ${normalizedPayload.date}\n` +
+    `• السعر الإجمالي: ${normalizedPayload.totalPrice} DZD\n\n` +
+    `يرجى إرسال هذه الرسالة لتأكيد التواصل معنا.`;
+
+  const whatsappUrl = "https://wa.me/213560515258?text=" + encodeURIComponent(whatsappMessage);
+
   return {
     success: true,
-    submittedAt: submittedAt
+    submittedAt: submittedAt,
+    whatsappUrl: whatsappUrl
   };
 }
 
@@ -184,7 +241,9 @@ function validatePayload_(payload) {
   const requiredFields = [
     'fullName',
     'phoneNumber',
+    'email',
     'state',
+    'category',
     'offerId',
     'offerName',
     'date',
@@ -221,7 +280,9 @@ function normalizePayload_(payload) {
     submittedAt: stringifyValue_(payload.submittedAt),
     fullName: stringifyValue_(payload.fullName),
     phoneNumber: stringifyValue_(payload.phoneNumber),
+    email: stringifyValue_(payload.email),
     state: stringifyValue_(payload.state),
+    category: stringifyValue_(payload.category),
     offerId: payload.offerId,
     offerName: stringifyValue_(payload.offerName),
     date: stringifyValue_(payload.date),
