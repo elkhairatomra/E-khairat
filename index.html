@@ -1,1873 +1,1862 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخيرات | عروض عمرة</title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-:root {
-  --bg: #f8fafc;
-  --surface: rgba(255, 255, 255, 0.76);
-  --surface-strong: #ffffff;
-  --text: #0f172a;
-  --muted: #475569;
-  --line: rgba(148, 163, 184, 0.2);
-  --primary: #1e293b;
-  --primary-deep: #0f172a;
-  --accent: #ff8716;
-  --accent-soft: rgba(255, 135, 22, 0.12);
-  --shadow: 0 18px 55px rgba(30, 53, 72, 0.14);
-  --radius-xl: 28px;
-  --radius-lg: 22px;
-  --radius-md: 16px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: "Almarai", sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(255, 135, 22, 0.16), transparent 22%),
-    radial-gradient(circle at left 20%, rgba(111, 130, 151, 0.22), transparent 24%),
-    linear-gradient(180deg, #f6f9fb 0%, var(--bg) 100%);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body.modal-open {
-  overflow: hidden;
-}
-
-button,
-input,
-select {
-  font: inherit;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-}
-
-.page-shell {
-  width: min(1180px, 100%);
-  margin: 0 auto;
-  padding: 0 0 80px; /* مساحة لشريط التنقل السفلي */
-  overflow-x: hidden;
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: 40px 20px;
-  border: none;
-  border-radius: 0 0 40px 40px; /* حواف دائرية من الأسفل فقط لتبدو كواجهة تطبيق */
-  background: 
-    linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%),
-    url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-shadow: var(--shadow);
-  color: #fff;
-}
-
-.topbar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: auto;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  color: #fff;
-  text-decoration: none;
-}
-
-.brand-mark {
-  width: 120px;
-  filter: brightness(0) invert(1); /* جعل الشعار أبيض ليتناسب مع الخلفية */
-  height: auto;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.brand strong,
-.brand span {
-  display: block;
-}
-
-.brand span:last-child {
-  margin-top: 4px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.92rem;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  padding: 10px;
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.category-chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding: 4px;
-}
-
-.chip-checkbox {
-  display: none;
-}
-
-.chip-label {
-  padding: 10px 18px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 0.9rem;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  user-select: none;
-}
-
-.chip-checkbox:checked + .chip-label {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 8px 20px rgba(255, 135, 22, 0.3);
-  transform: translateY(-2px) scale(1.02);
-}
-
-@keyframes revealCard {
-  0% { 
-    opacity: 0; 
-    transform: translateY(30px) scale(0.9);
-    filter: blur(10px);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-.animate-reveal {
-  animation: revealCard 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  opacity: 0;
-}
-
-.lang-switch {
-  display: inline-flex;
-  padding: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-}
-
-.lang-btn {
-  border: 0;
-  min-width: 54px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  cursor: pointer;
-  color: var(--primary-deep);
-  background: transparent;
-  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
-}
-
-.lang-btn.active {
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary-deep), var(--primary));
-}
-
-.input-shell,
-.select-shell {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 62px;
-  padding: 12px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-}
-
-.input-shell {
-  min-width: min(100%, 320px);
-}
-
-.input-shell input,
-.select-shell select {
-  border: 0;
-  outline: 0;
-  width: 100%;
-  background: transparent;
-  color: #fff;
-}
-
-.input-shell input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.input-shell .form-control,
-.select-shell .form-select {
-  border: 0;
-  box-shadow: none;
-  padding: 0;
-  background: transparent;
-}
-
-.select-shell {
-  min-width: 210px;
-  justify-content: space-between;
-}
-
-.select-shell span,
-.icon {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.hero-copy {
-  position: relative;
-  z-index: 1;
-  max-width: 800px;
-  margin-bottom: 20px;
-}
-
-.eyebrow,
-.section-kicker {
-  display: inline-flex;
-  padding: 8px 12px;
-  border-radius: 999px;
-  color: var(--accent);
-  background: var(--accent-soft);
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.hero-copy h1,
-.section-head h2,
-.modal-header h3 {
-  margin: 16px 0 10px;
-  line-height: 1.2;
-}
-
-.hero-copy h1 {
-  font-size: clamp(2.2rem, 6vw, 4.2rem);
-}
-
-.hero-copy p,
-.section-head p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.8;
-}
-
-.section-head {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 20px;
-  margin: 32px 0 18px;
-  flex-wrap: wrap;
-}
-
-.offers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  padding: 8px 0 10px;
-}
-
-.offer-card-face,
-.modal-panel,
-.summary-card,
-.empty-state {
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(22px);
-  box-shadow: 0 28px 80px rgba(15, 25, 45, 0.14);
-}
-
-.offer-card {
-  position: relative;
-  display: block;
-  overflow: visible;
-  border-radius: 32px;
-  background: transparent;
-  perspective: 1400px;
-  transform: translateY(0);
-  transition: transform 220ms ease, box-shadow 220ms ease;
-}
-
-.offer-card-inner {
-  display: grid;
-  height: 100%;
-  min-height: 480px;
-  transform-style: preserve-3d;
-  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.offer-card-face {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  grid-area: 1 / 1;
-  min-height: 100%;
-  overflow: hidden;
-  border-radius: 32px;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.offer-card-face::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
-  pointer-events: none;
-}
-
-.offer-card-back {
-  justify-content: space-between;
-  padding: 22px;
-  transform: rotateY(180deg);
-}
-
-.offer-card.is-flipped .offer-card-inner {
-  transform: rotateY(180deg);
-}
-
-.offer-card-front .offer-body,
-.offer-card-back {
-  gap: 18px;
-}
-
-.offer-card-front .offer-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-
-.offer-card-front .offer-footer,
-.offer-card-back .offer-footer {
-  margin-top: auto;
-}
-
-.offer-back-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.offer-back-head .flip-btn {
-  flex-shrink: 0;
-}
-
-.offer-back-head h3 {
-  margin: 0;
-  font-size: 1.28rem;
-  line-height: 1.35;
-}
-
-.offer-card-back .offer-caption,
-.offer-card-back .offer-meta {
-  margin: 0;
-}
-
-.offer-card-front .price-grid,
-.offer-card-back .price-grid {
-  margin: 0;
-}
-
-.offer-card-back .offer-footer {
-  align-items: stretch;
-  flex-direction: column;
-}
-
-.offer-card-back .price-note {
-  text-align: center;
-  white-space: normal;
-}
-
-.flip-btn {
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  cursor: pointer;
-  min-height: 44px;
-  padding: 10px 15px;
-  border-radius: 16px;
-  color: var(--primary-deep);
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.62);
-  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-}
-
-.flip-btn:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.86);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .offer-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 40px 110px rgba(15, 25, 45, 0.22);
-  }
-
-  .offer-card:hover .offer-card-inner {
-    transform: rotateY(180deg);
-  }
-
-  .offer-card:hover .offer-media img {
-    transform: scale(1.04);
-  }
-}
-
-.offer-media {
-  position: relative;
-  height: 220px;
-  border-radius: 28px;
-  overflow: hidden;
-  margin-bottom: 18px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.offer-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 320ms ease;
-}
-
-.offer-badge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  color: #fff;
-  font-weight: 700;
-  background: rgba(255, 135, 22, 0.95);
-  text-transform: uppercase;
-  letter-spacing: 0;
-}
-
-.offer-body {
-  padding: 22px 22px 24px;
-}
-
-.offer-body h3 {
-  margin: 0 0 10px;
-  font-size: 1.18rem;
-  letter-spacing: 0;
-}
-
-.offer-caption {
-  margin: 0 0 18px;
-  color: rgba(24, 48, 68, 0.68);
-  font-size: 0.95rem;
-  line-height: 1.7;
-}
-
-.offer-meta {
-  display: grid;
-  gap: 12px;
-  margin: 0 0 20px;
-  padding: 0;
-  list-style: none;
-}
-
-.offer-meta li {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.14);
-  color: var(--text);
-}
-
-.offer-meta li span {
-  color: rgba(24, 48, 68, 0.75);
-  font-size: 0.95rem;
-}
-
-.offer-meta li strong {
-  font-weight: 700;
-}
-
-.price-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(100px, 1fr));
-  gap: 10px;
-  margin-bottom: 22px;
-}
-
-.price-chip {
-  display: grid;
-  gap: 6px;
-  padding: 14px 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.13);
-  text-align: left;
-}
-
-.price-chip small {
-  display: block;
-  color: rgba(24, 48, 68, 0.7);
-  font-size: 0.82rem;
-}
-
-.price-chip strong {
-  display: block;
-  font-size: 1rem;
-}
-
-.offer-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-}
-
-.offer-footer .primary-btn {
-  width: 100%;
-  min-height: 50px;
-}
-
-.offer-footer .price-note {
-  color: rgba(24, 48, 68, 0.75);
-  font-size: 0.92rem;
-  white-space: nowrap;
-}
-
-.offer-media {
-  position: relative;
-  height: 230px;
-}
-
-.offer-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.offer-badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  color: #fff;
-  background: rgba(24, 48, 68, 0.76);
-  backdrop-filter: blur(8px);
-}
-
-.offer-body {
-  padding: 18px;
-}
-
-.offer-body h3 {
-  margin: 0 0 14px;
-  font-size: 1.35rem;
-}
-
-.offer-meta {
-  display: grid;
-  gap: 10px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.offer-meta li,
-.offer-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.offer-meta li span,
-.offer-footer span,
-.summary-card span {
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.offer-meta li strong,
-.offer-footer strong,
-.summary-card strong {
-  text-align: left;
-}
-
-.offer-footer {
-  align-items: end;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-
-.primary-btn {
-  border: 0;
-  cursor: pointer;
-  padding: 14px 22px;
-  border-radius: 18px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--accent), #ffa64c);
-  transition: transform 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
-  box-shadow: 0 18px 28px rgba(255, 135, 22, 0.22);
-}
-
-.primary-btn:hover {
-  transform: translateY(-2px);
-  color: #fff;
-}
-
-.primary-btn:disabled {
-  opacity: 0.7;
-  cursor: wait;
-}
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  isolation: isolate;
-}
-
-.hidden {
-  display: none;
-}
-
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: rgba(15, 25, 36, 0.42);
-  backdrop-filter: blur(8px);
-}
-
-.modal-panel {
-  position: relative;
-  z-index: 2;
-  width: min(100%, 720px);
-  padding: 24px;
-  border-radius: 32px;
-  animation: modal-in 220ms ease;
-}
-.modal-panel { overflow: visible; } /* Ensure dropdown options are not clipped */
-
-.modal-panel.large {
-  width: min(100%, 860px);
-}
-
-.modal-close {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 14px;
-  cursor: pointer;
-  color: var(--primary-deep);
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.room-options {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.room-card {
-  display: grid;
-  gap: 6px;
-  text-align: right;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  color: var(--text);
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.74);
-  transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
-}
-
-.room-card:hover {
-  color: var(--text);
-}
-
-.room-card.active {
-  border-color: rgba(255, 135, 22, 0.4);
-  background: rgba(255, 135, 22, 0.1);
-  transform: translateY(-2px);
-}
-
-.room-card small {
-  color: var(--muted);
-}
-
-.guest-icons {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.guest-icon {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  border-radius: 999px 999px 6px 6px;
-  background: rgba(255, 135, 22, 0.18);
-  border: 1px solid rgba(255, 135, 22, 0.34);
-}
-
-.guest-icon::before {
-  content: "";
-  position: absolute;
-  top: -6px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 135, 22, 0.9);
-}
-
-.booking-form,
-.request-form {
-  display: grid;
-  gap: 16px;
-}
-
-.form-row label,
-.form-grid label {
-  display: grid;
-  gap: 8px;
-  font-weight: 700;
-}
-
-.form-row input,
-.form-grid input:not([type="checkbox"]),
-.form-grid select {
-  min-height: 54px;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  outline: none;
-  background: rgba(255, 255, 255, 0.92);
-  background-color: var(--surface-strong); /* Explicitly set solid background */
-  color: var(--text); /* Explicitly set dark text color */
-}
-
-.form-row .form-control:focus,
-.form-grid .form-control:focus,
-.form-grid .form-select:focus {
-  border-color: rgba(255, 135, 22, 0.35);
-  box-shadow: 0 0 0 0.25rem rgba(255, 135, 22, 0.12);
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-top: 1px solid var(--line);
-  z-index: 100;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.nav-item.active {
-  color: var(--accent);
-}
-
-.nav-item .icon {
-  font-size: 1.4rem;
-  color: inherit;
-}
-
-.summary-strip,
-.request-summary {
-  display: grid;
-  gap: 14px;
-}
-
-.summary-strip {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  padding: 16px;
-  border-radius: 20px;
-  background: rgba(111, 130, 151, 0.1);
-}
-
-.summary-strip div,
-.summary-card {
-  display: grid;
-  gap: 4px;
-}
-
-.request-summary {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-bottom: 16px;
-}
-
-.summary-card {
-  padding: 16px;
-  border-radius: 18px;
-}
-
-.summary-card.accent {
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary-deep), var(--primary));
-}
-
-.summary-card.accent span {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.state-field {
-  display: grid;
-  grid-column: 1 / -1;
-  gap: 10px;
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-
-.state-field legend {
-  padding: 0;
-  margin: 0;
-  font-weight: 700;
-}
-
-.state-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px;
-  max-height: 220px;
-  overflow-y: auto;
-  padding: 2px 2px 6px;
-}
-
-.form-grid .state-option {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  cursor: pointer;
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.72);
-  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
-}
-
-.state-option:hover,
-.state-option:has(input:checked) {
-  border-color: rgba(255, 135, 22, 0.42);
-  background: rgba(255, 135, 22, 0.11);
-  transform: translateY(-1px);
-}
-
-.state-option input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  margin: 0;
-  flex-shrink: 0;
-  accent-color: var(--accent);
-}
-
-.state-option span {
-  line-height: 1.4;
-}
-
-.validation-message {
-  min-height: 24px;
-  margin: 0;
-  color: #c54d16;
-  font-size: 0.96rem;
-}
-
-.validation-message.success {
-  color: #167a47;
-}
-
-.empty-state {
-  padding: 28px;
-  border-radius: 24px;
-  text-align: center;
-  color: var(--muted);
-}
-
-html[dir="ltr"] .brand,
-html[dir="ltr"] .topbar,
-html[dir="ltr"] .toolbar,
-html[dir="ltr"] .offer-meta li,
-html[dir="ltr"] .offer-footer,
-html[dir="ltr"] .summary-strip,
-html[dir="ltr"] .summary-card,
-html[dir="ltr"] .form-grid label,
-html[dir="ltr"] .form-row label,
-html[dir="ltr"] .room-card {
-  direction: ltr;
-}
-
-html[dir="ltr"] .offer-meta li strong,
-html[dir="ltr"] .offer-footer strong,
-html[dir="ltr"] .summary-card strong,
-html[dir="ltr"] .room-card,
-html[dir="ltr"] .form-grid label,
-html[dir="ltr"] .form-row label {
-  text-align: left;
-}
-
-.section {
-  position: relative;
-}
-
-.section-dark-blue {
-  background: linear-gradient(135deg, var(--primary-deep), var(--primary));
-  color: #ffffff;
-  padding: 80px 24px;
-  border-radius: var(--radius-xl);
-  margin: 40px 0;
-  box-shadow: var(--shadow);
-}
-
-.section-dark-blue .section-kicker {
-  color: #ffb36f;
-  background: rgba(255, 135, 22, 0.16);
-  border: 1px solid rgba(255, 135, 22, 0.24);
-}
-
-.content-center {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.section-dark-blue p {
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 700px;
-  margin: 16px auto 32px;
-}
-
-.site-footer {
-  text-align: center;
-  margin-top: 40px;
-  padding: 40px 24px;
-  border-top: 1px solid var(--line);
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.social-btn {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  background: var(--surface-strong);
-  color: var(--primary);
-  font-size: 1.4rem;
-  transition: all 0.2s ease;
-  border: 1px solid var(--line);
-  text-decoration: none;
-}
-
-.social-btn:hover {
-  background: linear-gradient(135deg, var(--accent), #ffa64c);
-  color: #fff;
-  border-color: transparent;
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(255, 135, 22, 0.2);
-}
-
-@keyframes modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@media (max-width: 980px) {
-  .offers-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  body {
-    background:
-      linear-gradient(180deg, #eef3f7 0%, #e9eff4 100%);
-  }
-
-  .page-shell {
-    width: 100%;
-    padding-top: max(10px, env(safe-area-inset-top));
-    padding-bottom: 90px;
-  }
-
-  .hero,
-  .modal-panel {
-    padding: 24px;
-    border-radius: 30px;
-  }
-
-  .topbar,
-  .section-head {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .topbar {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-
-  .brand {
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .brand-mark {
-    width: 132px;
-    filter: brightness(0); /* جعل الشعار أسود ليظهر على الخلفية الفاتحة */
-    margin: 0 auto;
-  }
-
-  .toolbar,
-  .input-shell,
-  .select-shell,
-  .primary-btn {
-    width: 100%;
-  }
-
-  .toolbar {
-    gap: 16px;
-  }
-
-  .lang-switch {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .lang-btn {
-    flex: 1;
-  }
-
-  .hero-copy {
-    padding-top: 0; /* تم تعديل padding الـ hero بالكامل */
-  }
-
-  .hero-copy h1 {
-    font-size: clamp(2rem, 7vw, 2.8rem);
-  }
-
-  .hero-copy p,
-  .section-head p {
-    line-height: 1.7;
-  }
-
-  .section-head {
-    margin-top: 24px;
-    text-align: center;
-  }
-
-  .section-head p {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  .offers-grid,
-  .room-options,
-  .request-summary,
-  .form-grid,
-  .summary-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .offer-media {
-    height: 224px;
-  }
-
-  .offer-card {
-    border-radius: 28px;
-  }
-
-  .offer-card-inner {
-    min-height: 700px;
-  }
-
-  .offer-card-face {
-    border-radius: 28px;
-  }
-
-  .offer-card-back {
-    padding: 18px;
-  }
-
-  .offer-back-head {
-    align-items: flex-start;
-  }
-
-  .offer-body {
-    padding: 18px;
-  }
-
-  .offer-footer {
-    gap: 12px;
-  }
-
-  .offer-footer .primary-btn,
-  #confirmBookingBtn,
-  #submitRequestBtn {
-    min-height: 52px;
-  }
-
-  .modal {
-    padding: 8px;
-    align-items: end;
-  }
-
-  .modal-panel,
-  .modal-panel.large {
-    width: 100%;
-    max-height: 92vh;
-    margin-bottom: -20px; /* للالتصاق بالأسفل */
-    overflow-y: auto;
-    border-radius: 32px 32px 0 0;
-    padding-bottom: calc(40px + env(safe-area-inset-bottom));
-  }
-
-  .modal-close {
-    top: 12px;
-    left: 12px;
-  }
-
-  .summary-strip,
-  .request-summary,
-  .form-grid {
-    gap: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .page-shell {
-    width: 100%;
-    padding-top: 16px;
-  }
-
-  .hero {
-    padding: 14px;
-    border-radius: 26px;
-  }
-
-  .brand-mark {
-    width: 112px;
-  }
-
-  .brand span:last-child {
-    font-size: 0.85rem;
-  }
-
-  .hero-copy {
-    padding-top: 0;
-  }
-
-  .hero-copy h1 {
-    font-size: clamp(1.8rem, 8vw, 2.4rem);
-  }
-
-  .input-shell,
-  .select-shell {
-    min-height: 52px;
-    padding: 8px 12px;
-    border-radius: 16px;
-  }
-
-  .offer-media {
-    height: 205px;
-  }
-
-  .offer-card-inner {
-    min-height: 680px;
-  }
-
-  .offer-card-back {
-    gap: 14px;
-    padding: 16px;
-  }
-
-  .offer-card-front .offer-footer {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .offer-footer .price-note {
-    white-space: normal;
-  }
-
-  .offer-body h3 {
-    font-size: 1.15rem;
-  }
-
-  .modal-panel,
-  .modal-panel.large {
-    padding: 16px 14px calc(18px + env(safe-area-inset-bottom));
-  }
-
-  .room-card {
-    padding: 14px;
-    border-radius: 20px;
-  }
-
-  .primary-btn {
-    padding: 14px 18px;
-    border-radius: 16px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .offer-card,
-  .offer-card-inner,
-  .offer-media img,
-  .flip-btn {
-    transition: none;
-  }
-}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الخيرات | عروض عمرة</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: rgba(255, 255, 255, 0.76);
+      --surface-strong: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: rgba(148, 163, 184, 0.2);
+      --primary: #1e293b;
+      --primary-deep: #0f172a;
+      --accent: #ff8716;
+      --accent-soft: rgba(255, 135, 22, 0.12);
+      --shadow: 0 18px 55px rgba(30, 53, 72, 0.14);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Almarai", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255, 135, 22, 0.16), transparent 22%),
+        radial-gradient(circle at left 20%, rgba(111, 130, 151, 0.22), transparent 24%),
+        linear-gradient(180deg, #f6f9fb 0%, var(--bg) 100%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    /* Splash Screen Styles (Framer Motion Feel) */
+    .splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.1s ease;
+    }
+
+    .splash-logo {
+      width: 140px;
+      height: auto;
+      filter: brightness(1);
+      animation: logoEntrance 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes logoEntrance {
+      0% { transform: scale(0.5); opacity: 0; filter: blur(10px); }
+      100% { transform: scale(1); opacity: 1; filter: blur(0); }
+    }
+
+    .splash-hidden {
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page-shell {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 0 0 80px;
+      /* مساحة لشريط التنقل السفلي */
+      overflow-x: hidden;
+    }
+    @media (max-width: 720px) { .page-shell { padding-top: 0; } }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 40px 20px;
+      border: none;
+      border-radius: 0 0 40px 40px;
+      /* حواف دائرية من الأسفل فقط لتبدو كواجهة تطبيق */
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%),
+        url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--shadow);
+      color: #fff;
+    }
+
+    .topbar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: auto;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 120px;
+      filter: brightness(0) invert(1);
+      /* جعل الشعار أبيض ليتناسب مع الخلفية */
+      height: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+    }
+
+    .brand span:last-child {
+      margin-top: 4px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.92rem;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      padding: 10px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .category-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 4px;
+    }
+
+    .chip-checkbox {
+      display: none;
+    }
+
+    .chip-label {
+      padding: 10px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      user-select: none;
+    }
+
+    .chip-checkbox:checked+.chip-label {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 8px 20px rgba(255, 135, 22, 0.3);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    @keyframes revealCard {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+        filter: blur(10px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .animate-reveal {
+      animation: revealCard 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      opacity: 0;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      padding: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+    }
+
+    .lang-btn {
+      border: 0;
+      min-width: 54px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: var(--primary-deep);
+      background: transparent;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .lang-btn.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+    }
+
+    .input-shell,
+    .select-shell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 62px;
+      padding: 12px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+    }
+
+    .input-shell {
+      min-width: min(100%, 320px);
+    }
+
+    .input-shell input,
+    .select-shell select {
+      border: 0;
+      outline: 0;
+      width: 100%;
+      background: transparent;
+      color: #fff;
+    }
+
+    .input-shell input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .input-shell .form-control,
+    .select-shell .form-select {
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    .select-shell {
+      min-width: 210px;
+      justify-content: space-between;
+    }
+
+    .select-shell span,
+    .icon {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow,
+    .section-kicker {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--accent);
+      background: var(--accent-soft);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .hero-copy h1,
+    .section-head h2,
+    .modal-header h3 {
+      margin: 16px 0 10px;
+      line-height: 1.2;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+    }
+
+    .hero-copy p,
+    .section-head p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.8;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 32px 0 18px;
+      flex-wrap: wrap;
+    }
+
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      padding: 8px 0 10px;
+    }
+
+    .offer-card-face,
+    .modal-panel,
+    .summary-card,
+    .empty-state {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 28px 80px rgba(15, 25, 45, 0.14);
+    }
+
+    .offer-card {
+      position: relative;
+      display: block;
+      overflow: visible;
+      border-radius: 28px;
+      background: transparent;
+      perspective: 1500px;
+      transform: translateY(0);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .offer-card-inner {
+      display: grid;
+      height: 100%;
+      min-height: 480px;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .offer-card-face {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      grid-area: 1 / 1;
+      min-height: 100%;
+      overflow: hidden;
+      border-radius: 28px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .offer-card-face::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+      pointer-events: none;
+    }
+
+    .offer-card-back {
+      justify-content: space-between;
+      padding: 22px;
+      transform: rotateY(180deg);
+    }
+
+    .offer-card.is-flipped .offer-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .offer-card-front .offer-body,
+    .offer-card-back {
+      gap: 18px;
+    }
+
+    .offer-card-front .offer-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .offer-card-front .offer-footer,
+    .offer-card-back .offer-footer {
+      margin-top: auto;
+    }
+
+    .offer-back-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .offer-back-head .flip-btn {
+      flex-shrink: 0;
+    }
+
+    .offer-back-head h3 {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.35;
+    }
+
+    .offer-card-back .offer-caption,
+    .offer-card-back .offer-meta {
+      margin: 0;
+    }
+
+    .offer-card-front .price-grid,
+    .offer-card-back .price-grid {
+      margin: 0;
+    }
+
+    .offer-card-back .offer-footer {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .offer-card-back .price-note {
+      text-align: center;
+      white-space: normal;
+    }
+
+    .flip-btn {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      cursor: pointer;
+      min-height: 44px;
+      padding: 10px 15px;
+      border-radius: 16px;
+      color: var(--primary-deep);
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.62);
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+
+    .flip-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .offer-card:hover .offer-media img {
+        transform: scale(1.04);
+      }
+    }
+
+    .offer-media {
+      position: relative;
+      height: 220px;
+      border-radius: 28px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .offer-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 320ms ease;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #fff;
+      font-weight: 700;
+      background: rgba(255, 135, 22, 0.95);
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .offer-body {
+      padding: 22px 22px 24px;
+    }
+
+    .offer-body h3 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+      letter-spacing: 0;
+    }
+
+    .offer-caption {
+      margin: 0 0 18px;
+      color: rgba(24, 48, 68, 0.68);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .offer-meta {
+      display: grid;
+      gap: 12px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .offer-meta li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.14);
+      color: var(--text);
+    }
+
+    .offer-meta li span {
+      color: rgba(24, 48, 68, 0.75);
+      font-size: 0.95rem;
+    }
+
+    .offer-meta li strong {
+      font-weight: 700;
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(100px, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .price-chip {
+      display: grid;
+      gap: 6px;
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.13);
+      text-align: left;
+    }
+
+    .price-chip small {
+      display: block;
+      color: rgba(24, 48, 68, 0.7);
+      font-size: 0.82rem;
+    }
+
+    .price-chip strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .offer-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .offer-footer .primary-btn {
+      width: 100%;
+      min-height: 50px;
+    }
+
+    .offer-footer .price-note {
+      color: rgba(24, 48, 68, 0.75);
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .offer-media {
+      position: relative;
+      height: 230px;
+    }
+
+    .offer-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(24, 48, 68, 0.76);
+      backdrop-filter: blur(8px);
+    }
+
+    .offer-body {
+      padding: 18px;
+    }
+
+    .offer-body h3 {
+      margin: 0 0 14px;
+      font-size: 1.35rem;
+    }
+
+    .offer-meta {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .offer-meta li,
+    .offer-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .offer-meta li span,
+    .offer-footer span,
+    .summary-card span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .offer-meta li strong,
+    .offer-footer strong,
+    .summary-card strong {
+      text-align: left;
+    }
+
+    .offer-footer {
+      align-items: end;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .primary-btn {
+      border: 0;
+      cursor: pointer;
+      padding: 14px 22px;
+      border-radius: 18px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), #ffa64c);
+      transition: transform 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
+      box-shadow: 0 18px 28px rgba(255, 135, 22, 0.22);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      color: #fff;
+    }
+
+    .primary-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      isolation: isolate;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: rgba(15, 25, 36, 0.42);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-panel {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 720px);
+      padding: 24px;
+      border-radius: 32px;
+      animation: modal-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-panel {
+      overflow: visible;
+    }
+
+    /* Ensure dropdown options are not clipped */
+
+    .modal-panel.large {
+      width: min(100%, 860px);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 14px;
+      cursor: pointer;
+      color: var(--primary-deep);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .room-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .room-card {
+      display: grid;
+      gap: 6px;
+      text-align: right;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      color: var(--text);
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.74);
+      transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
+    }
+
+    .room-card:hover {
+      color: var(--text);
+    }
+
+    .room-card.active {
+      border-color: rgba(255, 135, 22, 0.4);
+      background: rgba(255, 135, 22, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .room-card small {
+      color: var(--muted);
+    }
+
+    .guest-icons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .guest-icon {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px 999px 6px 6px;
+      background: rgba(255, 135, 22, 0.18);
+      border: 1px solid rgba(255, 135, 22, 0.34);
+    }
+
+    .guest-icon::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      right: 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 135, 22, 0.9);
+    }
+
+    .booking-form,
+    .request-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row label,
+    .form-grid label {
+      display: grid;
+      gap: 8px;
+      font-weight: 700;
+    }
+
+    .form-row input,
+    .form-grid input:not([type="checkbox"]),
+    .form-grid select {
+      min-height: 54px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.92);
+      background-color: var(--surface-strong);
+      /* Explicitly set solid background */
+      color: var(--text);
+      /* Explicitly set dark text color */
+    }
+
+    .form-row .form-control:focus,
+    .form-grid .form-control:focus,
+    .form-grid .form-select:focus {
+      border-color: rgba(255, 135, 22, 0.35);
+      box-shadow: 0 0 0 0.25rem rgba(255, 135, 22, 0.12);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+    }
+
+    .nav-item .icon {
+      font-size: 1.4rem;
+      color: inherit;
+    }
+
+    .summary-strip,
+    .request-summary {
+      display: grid;
+      gap: 14px;
+    }
+
+    .summary-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(111, 130, 151, 0.1);
+    }
+
+    .summary-strip div,
+    .summary-card {
+      display: grid;
+      gap: 4px;
+    }
+
+    .request-summary {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .summary-card {
+      padding: 16px;
+      border-radius: 18px;
+    }
+
+    .summary-card.accent {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+    }
+
+    .summary-card.accent span {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .state-field {
+      display: grid;
+      grid-column: 1 / -1;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    .state-field legend {
+      padding: 0;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .state-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 2px 2px 6px;
+    }
+
+    .form-grid .state-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      cursor: pointer;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.72);
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .state-option:hover,
+    .state-option:has(input:checked) {
+      border-color: rgba(255, 135, 22, 0.42);
+      background: rgba(255, 135, 22, 0.11);
+      transform: translateY(-1px);
+    }
+
+    .state-option input[type="checkbox"],
+    .state-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      flex-shrink: 0;
+      accent-color: var(--accent);
+    }
+
+    .state-option span {
+      line-height: 1.4;
+    }
+
+    .validation-message {
+      min-height: 24px;
+      margin: 0;
+      color: #c54d16;
+      font-size: 0.96rem;
+    }
+
+    .validation-message.success {
+      color: #167a47;
+    }
+
+    .empty-state {
+      padding: 28px;
+      border-radius: 24px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    html[dir="ltr"] .brand,
+    html[dir="ltr"] .topbar,
+    html[dir="ltr"] .toolbar,
+    html[dir="ltr"] .offer-meta li,
+    html[dir="ltr"] .offer-footer,
+    html[dir="ltr"] .summary-strip,
+    html[dir="ltr"] .summary-card,
+    html[dir="ltr"] .form-grid label,
+    html[dir="ltr"] .form-row label,
+    html[dir="ltr"] .room-card {
+      direction: ltr;
+    }
+
+    html[dir="ltr"] .offer-meta li strong,
+    html[dir="ltr"] .offer-footer strong,
+    html[dir="ltr"] .summary-card strong,
+    html[dir="ltr"] .room-card,
+    html[dir="ltr"] .form-grid label,
+    html[dir="ltr"] .form-row label {
+      text-align: left;
+    }
+
+    .section {
+      position: relative;
+    }
+
+    .section-dark-blue {
+      background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+      color: #ffffff;
+      padding: 80px 24px;
+      border-radius: var(--radius-xl);
+      margin: 40px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .section-dark-blue .section-kicker {
+      color: #ffb36f;
+      background: rgba(255, 135, 22, 0.16);
+      border: 1px solid rgba(255, 135, 22, 0.24);
+    }
+
+    .content-center {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-dark-blue p {
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 700px;
+      margin: 16px auto 32px;
+    }
+
+    .site-footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 40px 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .social-btn {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: var(--surface-strong);
+      color: var(--primary);
+      font-size: 1.4rem;
+      transition: all 0.2s ease;
+      border: 1px solid var(--line);
+      text-decoration: none;
+    }
+
+    .social-btn:hover {
+      background: linear-gradient(135deg, var(--accent), #ffa64c);
+      color: #fff;
+      border-color: transparent;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(255, 135, 22, 0.2);
+    }
+
+    @keyframes modal-in {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .offers-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        background:
+          linear-gradient(180deg, #eef3f7 0%, #e9eff4 100%);
+      }
+
+      .page-shell {
+        width: 100%;
+        padding-top: max(10px, env(safe-area-inset-top));
+        padding-bottom: 90px;
+      }
+
+      .hero,
+      .modal-panel {
+        padding: 24px;
+        border-radius: 30px;
+      }
+
+      .topbar,
+      .section-head {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .brand {
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+      }
+
+      .brand-mark {
+        width: 132px;
+        filter: brightness(0);
+        /* جعل الشعار أسود ليظهر على الخلفية الفاتحة */
+        margin: 0 auto;
+      }
+
+      .toolbar,
+      .input-shell,
+      .select-shell,
+      .primary-btn {
+        width: 100%;
+      }
+
+      .toolbar {
+        gap: 16px;
+      }
+
+      .lang-switch {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .lang-btn {
+        flex: 1;
+      }
+
+      .hero-copy {
+        padding-top: 0;
+        /* تم تعديل padding الـ hero بالكامل */
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(2rem, 7vw, 2.8rem);
+      }
+
+      .hero-copy p,
+      .section-head p {
+        line-height: 1.7;
+      }
+
+      .section-head {
+        margin-top: 24px;
+        text-align: center;
+      }
+
+      .section-head p {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .offers-grid,
+      .room-options,
+      .request-summary,
+      .form-grid,
+      .summary-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .offer-media {
+        height: 224px;
+      }
+
+      .offer-card {
+        border-radius: 28px;
+      }
+
+      .offer-card-inner {
+        min-height: 700px;
+      }
+
+      .offer-card-face {
+        border-radius: 28px;
+      }
+
+      .offer-card-back {
+        padding: 18px;
+      }
+
+      .offer-back-head {
+        align-items: flex-start;
+      }
+
+      .offer-body {
+        padding: 18px;
+      }
+
+      .offer-footer {
+        gap: 12px;
+      }
+
+      .offer-footer .primary-btn,
+      #confirmBookingBtn,
+      #submitRequestBtn {
+        min-height: 52px;
+      }
+
+      .modal {
+        padding: 8px;
+        align-items: end;
+      }
+
+      .modal-panel,
+      .modal-panel.large {
+        width: 100%;
+        max-height: 92vh;
+        margin-bottom: -20px;
+        /* للالتصاق بالأسفل */
+        overflow-y: auto;
+        border-radius: 32px 32px 0 0;
+        padding-bottom: calc(40px + env(safe-area-inset-bottom));
+      }
+
+      .modal-close {
+        top: 12px;
+        left: 12px;
+      }
+
+      .summary-strip,
+      .request-summary,
+      .form-grid {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-shell {
+        width: 100%;
+        padding-top: 16px;
+      }
+
+      .hero {
+        padding: 14px;
+        border-radius: 26px;
+      }
+
+      .brand-mark {
+        width: 112px;
+      }
+
+      .brand span:last-child {
+        font-size: 0.85rem;
+      }
+
+      .hero-copy {
+        padding-top: 0;
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(1.8rem, 8vw, 2.4rem);
+      }
+
+      .input-shell,
+      .select-shell {
+        min-height: 52px;
+        padding: 8px 12px;
+        border-radius: 16px;
+      }
+
+      .offer-media {
+        height: 205px;
+      }
+
+      .offer-card-inner {
+        min-height: 680px;
+      }
+
+      .offer-card-back {
+        gap: 14px;
+        padding: 16px;
+      }
+
+      .offer-card-front .offer-footer {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .offer-footer .price-note {
+        white-space: normal;
+      }
+
+      .offer-body h3 {
+        font-size: 1.15rem;
+      }
+
+      .modal-panel,
+      .modal-panel.large {
+        padding: 16px 14px calc(18px + env(safe-area-inset-bottom));
+      }
+
+      .room-card {
+        padding: 14px;
+        border-radius: 20px;
+      }
+
+      .primary-btn {
+        padding: 14px 18px;
+        border-radius: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .offer-card,
+      .offer-card-inner,
+      .offer-media img,
+      .flip-btn {
+        transition: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="page-shell container-xl">
-        <header class="hero">
-            <nav class="topbar">
-                <a class="brand" href="#" aria-label="الخيرات">
-                    <img class="brand-mark" src="logo.png" alt="الخيرات للسياحة والأسفار">
-                    <div>
-                        <span id="brandSubtitle">وكالة سفر متخصصة في العمرة</span>
-                    </div>
-                </a>
+  <!-- Splash Screen -->
+  <div id="splashScreen" class="splash-screen">
+    <img src="logo.png" alt="الخيرات" class="splash-logo">
+  </div>
 
-                <div class="toolbar">
-                    <div class="lang-switch" aria-label="Language switcher">
-                        <button id="langArBtn" class="lang-btn btn active" type="button">AR</button>
-                        <button id="langFrBtn" class="lang-btn btn" type="button">FR</button>
-                    </div>
+  <div class="page-shell container-xl">
+    <header class="hero">
+      <nav class="topbar">
+        <a class="brand" href="#" aria-label="الخيرات">
+          <img class="brand-mark" src="logo.png" alt="الخيرات للسياحة والأسفار">
+          <div>
+            <span id="brandSubtitle">وكالة سفر متخصصة في العمرة</span>
+          </div>
+        </a>
 
-                    <label class="input-shell">
-                        <span class="icon">⌕</span>
-                        <input id="hotelSearch" class="form-control" type="search" placeholder="ابحث عن فندق">
-                    </label>
+        <div class="toolbar">
+          <div class="lang-switch" aria-label="Language switcher">
+            <button id="langArBtn" class="lang-btn btn active" type="button">AR</button>
+            <button id="langFrBtn" class="lang-btn btn" type="button">FR</button>
+          </div>
 
-                    <label class="input-shell">
-                        <span class="icon">📅</span>
-                        <input id="dateFilter" class="form-control" type="search" placeholder="بحث بالتاريخ">
-                    </label>
+          <label class="input-shell">
+            <span class="icon">⌕</span>
+            <input id="hotelSearch" class="form-control" type="search" placeholder="ابحث عن فندق">
+          </label>
 
-                    <div class="category-chips" id="categoryFilterGroup">
-                        <input type="checkbox" id="catAll" class="chip-checkbox" value="all" checked>
-                        <label for="catAll" class="chip-label" id="labelAll">جميع العروض</label>
-                        
-                        <input type="checkbox" id="catEconomy" class="chip-checkbox" value="Economy">
-                        <label for="catEconomy" class="chip-label" id="labelEconomy">اقتصادي</label>
-                        
-                        <input type="checkbox" id="catPremium" class="chip-checkbox" value="Premium">
-                        <label for="catPremium" class="chip-label" id="labelPremium">مميز</label>
-                        
-                        <input type="checkbox" id="catVIP" class="chip-checkbox" value="VIP">
-                        <label for="catVIP" class="chip-label" id="labelVIP">VIP</label>
-                    </div>
-                </div>
-            </nav>
+          <label class="input-shell">
+            <span class="icon">📅</span>
+            <input id="dateFilter" class="form-control" type="search" placeholder="بحث بالتاريخ">
+          </label>
 
-            <div class="hero-copy">
-                <div id="heroEyebrow" class="eyebrow">رحلات عمرة منظمة بعناية</div>
-                <h1 id="heroTitle">اختر العرض المناسب واحجز بخطوات واضحة وسريعة</h1>
-                <p id="heroText">
-                    تجربة عربية بسيطة، بطاقات عروض واضحة، وحساب تلقائي للأسعار والغرف مع
-                    تجهيز مباشر للربط مع Google Sheets.
-                </p>
-            </div>
-        </header>
+          <div class="category-chips" id="categoryFilterGroup">
+            <input type="checkbox" id="catAll" class="chip-checkbox" value="all" checked>
+            <label for="catAll" class="chip-label" id="labelAll">جميع العروض</label>
 
-        <main>
-            <section class="section-head">
-                <div>
-                    <span id="offersKicker" class="section-kicker">العروض</span>
-                    <h2 id="offersTitle">باقات العمرة المتاحة</h2>
-                </div>
-                <p id="offersText">ثلاث فئات رئيسية تناسب مختلف الميزانيات مع فنادق في مكة والمدينة.</p>
-            </section>
+            <input type="checkbox" id="catEconomy" class="chip-checkbox" value="Economy">
+            <label for="catEconomy" class="chip-label" id="labelEconomy">اقتصادي</label>
 
-            <section id="offersGrid" class="offers-grid" aria-live="polite"></section>
+            <input type="checkbox" id="catPremium" class="chip-checkbox" value="Premium">
+            <label for="catPremium" class="chip-label" id="labelPremium">مميز</label>
 
-            <section class="section section-dark-blue content-center">
-                <span class="section-kicker">لماذا تختارنا؟</span>
-                <h2>خدمة متميزة في كل خطوة</h2>
-                <p>
-                    نحن نضمن لك الراحة التامة خلال رحلتك الإيمانية من خلال اختيار أفضل الفنادق وأقربها للحرمين الشريفين، مع مرافقة تقنية تسهل عليك عملية الحجز والمتابعة.
-                </p>
-                <a href="tel:+213560515258" class="primary-btn btn">تواصل معنا الآن</a>
-            </section>
-        </main>
-
-        <footer class="site-footer">
-            <div class="social-links">
-                <a href="https://www.facebook.com/profile.php?id=100088810332191" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                <a href="https://wa.me/213560515258" class="social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
-                <a href="https://www.tiktok.com/@elkhadpphzn?is_from_webapp=1&sender_device=pc" class="social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a>
-            </div>
-            <p id="footerRights">© 2026 الخيرات للسياحة والأسفار. جميع الحقوق محفوظة.</p>
-        </footer>
-
-        </nav>
-    </div>
-
-    <div id="bookingModal" class="modal hidden" aria-hidden="true">
-        <div class="modal-backdrop" data-close="booking"></div>
-        <div class="modal-panel">
-            <button class="modal-close" type="button" data-close="booking" aria-label="إغلاق">×</button>
-            <div class="modal-header">
-                <span id="bookingKicker" class="section-kicker">تفاصيل العرض</span>
-                <h3 id="bookingOfferName"></h3>
-            </div>
-
-            <div id="roomOptions" class="room-options"></div>
-
-            <form id="bookingForm" class="booking-form">
-                <div class="form-row">
-                    <label id="peopleCountLabel" for="peopleCount">عدد الأشخاص</label>
-                    <input id="peopleCount" class="form-control" type="number" min="1" inputmode="numeric" placeholder="مثال: 4">
-                </div>
-
-                <div class="summary-strip">
-                    <div>
-                        <span id="roomCountLabel">عدد الغرف المحجوزة</span>
-                        <strong id="roomCountValue">0</strong>
-                    </div>
-                    <div>
-                        <span id="totalPriceLabel">السعر الإجمالي</span>
-                        <strong id="totalPriceValue">0 DZD</strong>
-                    </div>
-                </div>
-
-                <p id="bookingValidation" class="validation-message"></p>
-
-                <button id="confirmBookingBtn" class="primary-btn btn" type="submit">تأكيد الحجز</button>
-            </form>
+            <input type="checkbox" id="catVIP" class="chip-checkbox" value="VIP">
+            <label for="catVIP" class="chip-label" id="labelVIP">VIP</label>
+          </div>
         </div>
-    </div>
+      </nav>
 
-    <div id="requestModal" class="modal hidden" aria-hidden="true">
-        <div class="modal-backdrop" data-close="request"></div>
-        <div class="modal-panel large">
-            <button class="modal-close" type="button" data-close="request" aria-label="إغلاق">×</button>
-            <div class="modal-header">
-                <span id="requestKicker" class="section-kicker">تأكيد الطلب</span>
-                <h3 id="requestTitle">مراجعة بيانات الحجز وإرسال الطلب</h3>
-            </div>
+      <div class="hero-copy">
+        <div id="heroEyebrow" class="eyebrow">رحلات عمرة منظمة بعناية</div>
+        <h1 id="heroTitle">اختر العرض المناسب واحجز بخطوات واضحة وسريعة</h1>
+        <p id="heroText">
+          تجربة عربية بسيطة، بطاقات عروض واضحة، وحساب تلقائي للأسعار والغرف مع
+          تجهيز مباشر للربط مع Google Sheets.
+        </p>
+      </div>
+    </header>
 
-            <div id="requestSummary" class="request-summary"></div>
-
-            <form id="requestForm" class="request-form">
-                <div class="form-grid">
-                    <label>
-                        <span id="fullNameLabel">الاسم الكامل</span>
-                        <input id="fullName" class="form-control" name="fullName" type="text" required>
-                    </label>
-
-                    <label>
-                        <span id="phoneLabel">رقم الهاتف</span>
-                        <input id="phoneNumber" class="form-control" name="phoneNumber" type="tel" required>
-                    </label>
-
-                    <fieldset class="state-field">
-                        <legend id="stateLabel">الولاية</legend>
-                        <div id="stateOptions" class="state-options" aria-labelledby="stateLabel"></div>
-                    </fieldset>
-                </div>
-
-                <p id="requestStatus" class="validation-message"></p>
-
-                <button id="submitRequestBtn" class="primary-btn btn" type="submit">إرسال الطلب</button>
-            </form>
+    <main>
+      <section class="section-head">
+        <div>
+          <span id="offersKicker" class="section-kicker">العروض</span>
+          <h2 id="offersTitle">باقات العمرة المتاحة</h2>
         </div>
+        <p id="offersText">ثلاث فئات رئيسية تناسب مختلف الميزانيات مع فنادق في مكة والمدينة.</p>
+      </section>
+
+      <section id="offersGrid" class="offers-grid" aria-live="polite"></section>
+
+      <section class="section section-dark-blue content-center">
+        <span class="section-kicker">لماذا تختارنا؟</span>
+        <h2>خدمة متميزة في كل خطوة</h2>
+        <p>
+          نحن نضمن لك الراحة التامة خلال رحلتك الإيمانية من خلال اختيار أفضل الفنادق وأقربها للحرمين الشريفين، مع مرافقة
+          تقنية تسهل عليك عملية الحجز والمتابعة.
+        </p>
+        <a href="tel:+213560515258" class="primary-btn btn">تواصل معنا الآن</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=100088810332191" class="social-btn" aria-label="Facebook"
+          target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="https://wa.me/213560515258" class="social-btn" aria-label="WhatsApp" target="_blank"
+          rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
+        <a href="https://www.tiktok.com/@elkhadpphzn?is_from_webapp=1&sender_device=pc" class="social-btn"
+          aria-label="TikTok" target="_blank" rel="noopener noreferrer"><i class="bi bi-tiktok"></i></a>
+      </div>
+      <p id="footerRights"></p>
+    </footer>
+
+    <div class="bottom-nav">
+      <button class="nav-item active" onclick="window.scrollTo(0,0)"><i class="bi bi-house icon"></i><span id="navHome">الرئيسية</span></button>
+      <button class="nav-item" onclick="document.getElementById('offersGrid').scrollIntoView()"><i class="bi bi-grid icon"></i><span id="navOffers">العروض</span></button>
+      <button class="nav-item" onclick="window.open('https://wa.me/213560515258', '_blank')"><i class="bi bi-chat-dots icon"></i><span id="navContact">تواصل</span></button>
     </div>
+  </div>
 
-    <script>
-        const translations = {
-            ar: {
-                dir: "rtl",
-                brandSubtitle: "وكالة سفر متخصصة في العمرة",
-                searchPlaceholder: "ابحث عن فندق",
-                dateFilterPlaceholder: "بحث بالتاريخ",
-                categoryLabel: "فئات العروض",
-                categories: { all: "جميع العروض", Economy: "اقتصادي", Premium: "مميز", VIP: "VIP" },
-                heroEyebrow: "رحلات عمرة منظمة بعناية",
-                heroTitle: "اختر العرض المناسب واحجز بخطوات واضحة وسريعة",
-                heroText: "",
-                offersKicker: "العروض",
-                offersTitle: "باقات العمرة المتاحة",
-                offersText: "ثلاث فئات رئيسية تناسب مختلف الميزانيات مع فنادق في مكة والمدينة.",
-                bookingKicker: "تفاصيل العرض",
-                peopleCountLabel: "عدد الأشخاص",
-                peoplePlaceholder: "مثال: 4",
-                roomCountLabel: "عدد الغرف المحجوزة",
-                totalPriceLabel: "السعر الإجمالي",
-                confirmBooking: "تأكيد الحجز",
-                requestKicker: "تأكيد الطلب",
-                requestTitle: "مراجعة بيانات الحجز وإرسال الطلب",
-                fullNameLabel: "الاسم الكامل",
-                phoneLabel: "رقم الهاتف",
-                stateLabel: "الولاية",
-                submitRequest: "إرسال الطلب",
-                submitting: "جارٍ إرسال الطلب...",
-                emptyState: "لا توجد نتائج مطابقة للبحث الحالي.",
-                offerMeta: {
-                    navHome: "الرئيسية",
-                    navOffers: "العروض",
-                    navContact: "تواصل",
-                    date: "تاريخ السفر",
-                    makkah: "فندق مكة",
-                    madinah: "فندق المدينة",
-                    airport: "مطار الانطلاق",
-                    from: "السعر يبدأ من"
-                },
-                getOffer: "احصل على العرض",
-                flipPrices: "تفاصيل العرض",
-                flipBack: "رجوع",
-                summary: {
-                    offer: "العرض",
-                    date: "تاريخ السفر",
-                    makkah: "فندق مكة",
-                    madinah: "فندق المدينة",
-                    people: "عدد الأشخاص",
-                    rooms: "عدد الغرف",
-                    roomType: "نوع الغرفة",
-                    total: "الإجمالي"
-                },
-                roomLabels: {
-                    quintuple: "خماسية",
-                    quadruple: "رباعية",
-                    triple: "ثلاثية",
-                    double: "ثنائية"
-                },
-                roomCapacityText: "أشخاص في الغرفة",
-                statePlaceholder: "اختر الولاية",
-                footerRights: "© 2024 الخيرات للسياحة والأسفار. جميع الحقوق محفوظة.",
-                validation: {
-                    peopleRequired: "يرجى إدخال عدد الأشخاص.",
-                    quadMinimum: "الغرفة الرباعية يمكن أن تبدأ من شخص واحد، وبعدها يمكن الزيادة بفرد واحد مع حساب الغرف تلقائياً. كل 4 أشخاص تضيف غرفة واحدة.",
-                    multiple: "عدد الأشخاص غير متوافق مع الغرفة {room}. القيم المسموحة: {values}",
-                    bookingMissing: "لم يتم العثور على بيانات الحجز.",
-                    formRequired: "يرجى ملء جميع البيانات المطلوبة قبل الإرسال.",
-                    submitError: "تعذر إرسال الطلب إلى . تحقق من إعدادات الملف أو الصلاحيات .",
-                    submitSuccess: "تم إرسال الطلب بنجاح. سنقوم بالتواصل معكم قريباً.",
-                    duplicatePhone: "الرقم هذا مسجل من قبل انتظر الاتصال في اقرب الاجال"
-                }
-            },
-            fr: {
-                dir: "ltr",
-                brandSubtitle: "Agence de voyage specialisee en Omra",
-                searchPlaceholder: "Rechercher un hotel",
-                dateFilterPlaceholder: "Filtrer par date",
-                categoryLabel: "Categories d'offres",
-                categories: { all: "Toutes les offres", Economy: "Economy", Premium: "Premium", VIP: "VIP" },
-                heroEyebrow: "Voyages Omra soigneusement organises",
-                heroTitle: "Choisissez votre offre et reservez en quelques etapes claires",
-                heroText: "Une experience simple en arabe et en francais, avec calcul automatique des chambres et des prix, prete pour une integration Google Sheets.",
-                offersKicker: "Offres",
-                offersTitle: "Forfaits Omra disponibles",
-                offersText: "Trois categories principales pour differents budgets avec hotels a La Mecque et a Medine.",
-                bookingKicker: "Details de l'offre",
-                peopleCountLabel: "Nombre de personnes",
-                peoplePlaceholder: "Exemple : 4",
-                roomCountLabel: "Nombre de chambres",
-                totalPriceLabel: "Prix total",
-                confirmBooking: "Confirmer la reservation",
-                requestKicker: "Confirmation",
-                requestTitle: "Verifier la reservation et envoyer la demande",
-                fullNameLabel: "Nom complet",
-                phoneLabel: "Numero de telephone",
-                stateLabel: "Wilaya",
-                submitRequest: "Envoyer la demande",
-                submitting: "Envoi en cours...",
-                emptyState: "Aucun resultat ne correspond a votre recherche.",
-                offerMeta: {
-                    navHome: "Accueil",
-                    navOffers: "Offres",
-                    navContact: "0560515258",
-                    date: "Date de voyage",
-                    makkah: "Hotel a La Mecque",
-                    madinah: "Hotel a Medine",
-                    airport: "Aeroport de depart",
-                    from: "A partir de"
-                },
-                getOffer: "Voir l'offre",
-                flipPrices: "Details",
-                flipBack: "Retour",
-                summary: {
-                    offer: "Offre",
-                    date: "Date de voyage",
-                    makkah: "Hotel a La Mecque",
-                    madinah: "Hotel a Medine",
-                    people: "Nombre de personnes",
-                    rooms: "Nombre de chambres",
-                    roomType: "Type de chambre",
-                    total: "Total"
-                },
-                roomLabels: {
-                    quintuple: "Quintuple",
-                    quadruple: "Quadruple",
-                    triple: "Triple",
-                    double: "Double"
-                },
-                roomCapacityText: "personnes par chambre",
-                statePlaceholder: "Choisir la wilaya",
-                footerRights: "© 2024 E-Khairat Tourisme & Voyages. Tous droits réservés.",
-                validation: {
-                    peopleRequired: "Veuillez saisir le nombre de personnes.",
-                    quadMinimum: "La chambre quadruple peut commencer a partir d'une personne, puis l'ajout se fait personne par personne avec calcul automatique des chambres. Une chambre est ajoutee pour chaque groupe de 4 personnes.",
-                    multiple: "Le nombre de personnes ne correspond pas a la chambre {room}. Valeurs autorisees : {values}",
-                    bookingMissing: "Aucune donnee de reservation n'a ete trouvee.",
-                    formRequired: "Veuillez remplir tous les champs obligatoires avant l'envoi.",
-                    submitError: "Impossible d'envoyer la demande vers Google Sheets. Verifiez la configuration du fichier ou les autorisations Google Apps Script.",
-                    submitSuccess: "La demande a ete envoyee avec succes. Nous vous contacterons bientot.",
-                    duplicatePhone: "Ce numéro est déjà enregistré. Veuillez attendre notre appel prochainement."
-                }
-            }
-        };
+  <div id="bookingModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close="booking"></div>
+    <div class="modal-panel">
+      <button class="modal-close" type="button" data-close="booking" aria-label="إغلاق">×</button>
+      <div class="modal-header">
+        <span id="bookingKicker" class="section-kicker">تفاصيل العرض</span>
+        <h3 id="bookingOfferName"></h3>
+      </div>
 
-        let offers = [];
+      <div id="roomOptions" class="room-options"></div>
 
-        const algerianLocations = {
-            "الشلف": [],
-            "تلمسان": [],
-            "تيارت": [],
-            "تيسمسيلت": [],
-            "سعيدة": [],
-            "سيدي بلعباس": [],
-            "مستغانم": [],
-            "معسكر": [],
-            "وهران": [],
-            "البيض": [],
-            "النعامة": [],
-            "عين تموشنت": [],
-            "غليزان": []
-        };
+      <form id="bookingForm" class="booking-form">
+        <div class="form-row">
+          <label id="peopleCountLabel" for="peopleCount">عدد الأشخاص</label>
+          <input id="peopleCount" class="form-control" type="number" min="1" inputmode="numeric" placeholder="مثال: 4">
+        </div>
 
-        const roomTypes = [
-            { key: "quintuple", capacity: 5 },
-            { key: "quadruple", capacity: 4 },
-            { key: "triple", capacity: 3 },
-            { key: "double", capacity: 2 }
-        ];
+        <div class="summary-strip">
+          <div>
+            <span id="roomCountLabel">عدد الغرف المحجوزة</span>
+            <strong id="roomCountValue">0</strong>
+          </div>
+          <div>
+            <span id="totalPriceLabel">السعر الإجمالي</span>
+            <strong id="totalPriceValue">0 DZD</strong>
+          </div>
+        </div>
 
-        function loadOffers() {
-            return new Promise((resolve, reject) => {
-                if (typeof google === "undefined" || !google.script || !google.script.run) {
-                    // إذا لم يكن في بيئة Apps Script، استخدم البيانات الافتراضية
-                    offers = [
-                        {
-                            id: 1,
-                            category: "Economy",
-                            name: { ar: "عمرة الاقتصاد المبارك", fr: "Omra Economie Benie" },
-                            date: { ar: "10 أكتوبر 2026", fr: "10 octobre 2026" },
-                            makkahHotel: { ar: "فندق رواق البيت", fr: "Hotel Rawaq Al Bayt" },
-                            madinahHotel: { ar: "فندق طيبة النسيم", fr: "Hotel Tayba Al Nassim" },
-                            airport: { ar: "مطار الجزائر الدولي", fr: "Aeroport international d'Alger" },
-                            priceFrom: 185000,
-                            image: "https://rawaq-albait.multipleportal2.com/public/uploads/all/uPHebTbeS5QEzxzsrS6o1MQlwCMrs1uB89XEFYTa.jpg",
-                            roomPrices: { quintuple: 185000, quadruple: 198000, triple: 214000, double: 236000 }
-                        },
-                        {
-                            id: 2,
-                            category: "Premium",
-                            name: { ar: "عمرة الصفوة", fr: "Omra Prestige" },
-                            date: { ar: "22 نوفمبر 2026", fr: "22 novembre 2026" },
-                            makkahHotel: { ar: "فندق أبراج الصفا", fr: "Hotel Abraj Al Safa" },
-                            madinahHotel: { ar: "فندق دار الهجرة", fr: "Hotel Dar Al Hijra" },
-                            airport: { ar: "مطار وهران أحمد بن بلة", fr: "Aeroport d'Oran Ahmed Ben Bella" },
-                            priceFrom: 249000,
-                            image: "https://digital.ihg.com/is/image/ihg/intercontinental-madinah-9051732830-2x1?wid=1100",
-                            roomPrices: { quintuple: 249000, quadruple: 264000, triple: 283000, double: 309000 }
-                        },
-                        {
-                            id: 3,
-                            category: "VIP",
-                            name: { ar: "عمرة كبار الزوار", fr: "Omra VIP" },
-                            date: { ar: "15 ديسمبر 2026", fr: "15 decembre 2026" },
-                            makkahHotel: { ar: "سويس أوتيل المقام", fr: "Swissotel Al Maqam" },
-                            madinahHotel: { ar: "أنوار المدينة موفنبيك", fr: "Anwar Al Madinah Movenpick" },
-                            airport: { ar: "مطار قسنطينة محمد بوضياف", fr: "Aeroport Constantine Mohamed Boudiaf" },
-                            priceFrom: 345000,
-                            image: "https://m.ahstatic.com/is/image/accorhotels/Anwar_Al_Madinah_x_i129039",
-                            roomPrices: { quintuple: 345000, quadruple: 369000, triple: 398000, double: 435000 }
-                        }
-                    ];
-                    resolve();
-                    return;
-                }
+        <p id="bookingValidation" class="validation-message"></p>
 
-                google.script.run
-                    .withSuccessHandler((data) => {
-                        offers = data;
-                        resolve();
-                    })
-                    .withFailureHandler((error) => {
-                        console.error('Error loading offers:', error);
-                        // استخدم البيانات الافتراضية في حالة الخطأ
-                        offers = [
-                            {
-                                id: 1,
-                                category: "Economy",
-                                name: { ar: "عمرة الاقتصاد المبارك", fr: "Omra Economie Benie" },
-                                date: { ar: "10 أكتوبر 2026", fr: "10 octobre 2026" },
-                                makkahHotel: { ar: "فندق رواق البيت", fr: "Hotel Rawaq Al Bayt" },
-                                madinahHotel: { ar: "فندق طيبة النسيم", fr: "Hotel Tayba Al Nassim" },
-                                airport: { ar: "مطار الجزائر الدولي", fr: "Aeroport international d'Alger" },
-                                priceFrom: 185000,
-                                image: "https://rawaq-albait.multipleportal2.com/public/uploads/all/uPHebTbeS5QEzxzsrS6o1MQlwCMrs1uB89XEFYTa.jpg",
-                                roomPrices: { quintuple: 185000, quadruple: 198000, triple: 214000, double: 236000 }
-                            },
-                            {
-                                id: 2,
-                                category: "Premium",
-                                name: { ar: "عمرة الصفوة", fr: "Omra Prestige" },
-                                date: { ar: "22 نوفمبر 2026", fr: "22 novembre 2026" },
-                                makkahHotel: { ar: "فندق أبراج الصفا", fr: "Hotel Abraj Al Safa" },
-                                madinahHotel: { ar: "فندق دار الهجرة", fr: "Hotel Dar Al Hijra" },
-                                airport: { ar: "مطار وهران أحمد بن بلة", fr: "Aeroport d'Oran Ahmed Ben Bella" },
-                                priceFrom: 249000,
-                                image: "https://digital.ihg.com/is/image/ihg/intercontinental-madinah-9051732830-2x1?wid=1100",
-                                roomPrices: { quintuple: 249000, quadruple: 264000, triple: 283000, double: 309000 }
-                            },
-                            {
-                                id: 3,
-                                category: "VIP",
-                                name: { ar: "عمرة كبار الزوار", fr: "Omra VIP" },
-                                date: { ar: "15 ديسمبر 2026", fr: "15 decembre 2026" },
-                                makkahHotel: { ar: "سويس أوتيل المقام", fr: "Swissotel Al Maqam" },
-                                madinahHotel: { ar: "أنوار المدينة موفنبيك", fr: "Anwar Al Madinah Movenpick" },
-                                airport: { ar: "مطار قسنطينة محمد بوضياف", fr: "Aeroport Constantine Mohamed Boudiaf" },
-                                priceFrom: 345000,
-                                image: "https://m.ahstatic.com/is/image/accorhotels/Anwar_Al_Madinah_x_i129039",
-                                roomPrices: { quintuple: 345000, quadruple: 369000, triple: 398000, double: 435000 }
-                            }
-                        ];
-                        resolve();
-                    })
-                    .getOffers();
-            });
+        <button id="confirmBookingBtn" class="primary-btn btn" type="submit">تأكيد الحجز</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="requestModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close="request"></div>
+    <div class="modal-panel large">
+      <button class="modal-close" type="button" data-close="request" aria-label="إغلاق">×</button>
+      <div class="modal-header">
+        <span id="requestKicker" class="section-kicker">تأكيد الطلب</span>
+        <h3 id="requestTitle">مراجعة بيانات الحجز وإرسال الطلب</h3>
+      </div>
+
+      <div id="requestSummary" class="request-summary"></div>
+
+      <form id="requestForm" class="request-form">
+        <div class="form-grid">
+          <label style="grid-column: 1 / -1;">
+            <span id="fullNameLabel">الاسم الكامل</span>
+            <input id="fullName" class="form-control" name="fullName" type="text" required>
+          </label>
+
+          <label>
+            <span id="phoneLabel">رقم الهاتف</span>
+            <input id="phoneNumber" class="form-control" name="phoneNumber" type="tel" required>
+          </label>
+
+          <label>
+            <span id="emailLabel">البريد الإلكتروني</span>
+            <input id="email" class="form-control" name="email" type="email" required>
+          </label>
+
+          <fieldset class="state-field">
+            <legend id="stateLabel">الولاية</legend>
+            <select id="stateSelect" class="form-select input" required>
+              <option value="" id="statePlaceholder">اختر الولاية</option>
+              <option>وهران</option>
+              <option>تلمسان</option>
+              <option>سيدي بلعباس</option>
+              <option>مستغانم</option>
+              <option>معسكر</option>
+              <option>غليزان</option>
+              <option>عين تموشنت</option>
+              <option>النعامة</option>
+              <option>بشار</option>
+              <option>البيض</option>
+              <option>تندوف</option>
+            </select>
+          </fieldset>
+        </div>
+
+        <p id="requestStatus" class="validation-message"></p>
+
+        <button id="submitRequestBtn" class="primary-btn btn" type="submit">إرسال الطلب</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      ar: {
+        dir: "rtl",
+        brandSubtitle: "وكالة سفر متخصصة في العمرة",
+        searchPlaceholder: "ابحث عن فندق",
+        dateFilterPlaceholder: "بحث بالتاريخ",
+        categoryLabel: "فئات العروض",
+        categories: { all: "جميع العروض", Economy: "اقتصادي", Premium: "مميز", VIP: "VIP" },
+        heroEyebrow: "رحلات عمرة منظمة بعناية",
+        heroTitle: "اختر العرض المناسب واحجز بخطوات واضحة وسريعة",
+        heroText: "",
+        offersKicker: "العروض",
+        offersTitle: "باقات العمرة المتاحة",
+        offersText: "ثلاث فئات رئيسية تناسب مختلف الميزانيات مع فنادق في مكة والمدينة.",
+        bookingKicker: "تفاصيل العرض",
+        peopleCountLabel: "عدد الأشخاص",
+        peoplePlaceholder: "مثال: 4",
+        roomCountLabel: "عدد الغرف المحجوزة",
+        totalPriceLabel: "السعر الإجمالي",
+        confirmBooking: "تأكيد الحجز",
+        requestKicker: "تأكيد الطلب",
+        requestTitle: "مراجعة بيانات الحجز وإرسال الطلب",
+        fullNameLabel: "الاسم الكامل",
+        phoneLabel: "رقم الهاتف",
+        emailLabel: "البريد الإلكتروني",
+        stateLabel: "الولاية",
+        submitRequest: "إرسال الطلب",
+        submitting: "جارٍ إرسال الطلب...",
+        emptyState: "لا توجد نتائج مطابقة للبحث الحالي.",
+        offerMeta: {
+          navHome: "الرئيسية",
+          navOffers: "العروض",
+          navContact: "تواصل",
+          date: "تاريخ السفر",
+          makkah: "فندق مكة",
+          madinah: "فندق المدينة",
+          airport: "مطار الانطلاق",
+          from: "السعر يبدأ من"
+        },
+        getOffer: "احصل على العرض",
+        flipPrices: "تفاصيل العرض",
+        flipBack: "رجوع",
+        summary: {
+          offer: "العرض",
+          date: "تاريخ السفر",
+          makkah: "فندق مكة",
+          madinah: "فندق المدينة",
+          people: "عدد الأشخاص",
+          rooms: "عدد الغرف",
+          roomType: "نوع الغرفة",
+          total: "الإجمالي"
+        },
+        roomLabels: {
+          quintuple: "خماسية",
+          quadruple: "رباعية",
+          triple: "ثلاثية",
+          double: "ثنائية"
+        },
+        roomCapacityText: "أشخاص في الغرفة",
+        statePlaceholder: "اختر الولاية",
+        footerRights: "© 2024 الخيرات للسياحة والأسفار. جميع الحقوق محفوظة.",
+        validation: {
+          peopleRequired: "يرجى إدخال عدد الأشخاص.",
+          quadMinimum: "الغرفة الرباعية يمكن أن تبدأ من شخص واحد، وبعدها يمكن الزيادة بفرد واحد مع حساب الغرف تلقائياً. كل 4 أشخاص تضيف غرفة واحدة.",
+          multiple: "عدد الأشخاص غير متوافق مع الغرفة {room}. القيم المسموحة: {values}",
+          bookingMissing: "لم يتم العثور على بيانات الحجز.",
+          formRequired: "يرجى ملء جميع البيانات المطلوبة قبل الإرسال.",
+          submitError: "تعذر إرسال الطلب إلى . تحقق من إعدادات الملف أو الصلاحيات .",
+          submitSuccess: "تم إرسال الطلب بنجاح. سنقوم بالتواصل معكم قريباً.",
+          duplicatePhone: "الرقم هذا مسجل من قبل انتظر الاتصال في اقرب الاجال"
         }
-
-        const offersGrid = document.getElementById("offersGrid");
-        const hotelSearch = document.getElementById("hotelSearch");
-        const dateFilter = document.getElementById("dateFilter");
-        const categoryCheckboxes = document.querySelectorAll(".chip-checkbox");
-        const bookingModal = document.getElementById("bookingModal");
-        const requestModal = document.getElementById("requestModal");
-        const bookingOfferName = document.getElementById("bookingOfferName");
-        const roomOptions = document.getElementById("roomOptions");
-        const peopleCountInput = document.getElementById("peopleCount");
-        const roomCountValue = document.getElementById("roomCountValue");
-        const totalPriceValue = document.getElementById("totalPriceValue");
-        const bookingValidation = document.getElementById("bookingValidation");
-        const requestSummary = document.getElementById("requestSummary");
-        const requestStatus = document.getElementById("requestStatus");
-        const stateOptions = document.getElementById("stateOptions");
-        const submitRequestBtn = document.getElementById("submitRequestBtn");
-        const langArBtn = document.getElementById("langArBtn");
-        const langFrBtn = document.getElementById("langFrBtn");
-
-        const state = {
-            language: "ar",
-            activeOffer: null,
-            selectedRoomKey: "quintuple",
-            booking: null
-        };
-
-        function resetBookingFlow() {
-            state.activeOffer = null;
-            state.selectedRoomKey = "quintuple";
-            state.booking = null;
-            document.getElementById("bookingForm").reset();
-            document.getElementById("requestForm").reset();
-            roomCountValue.textContent = "0";
-            totalPriceValue.textContent = formatDzd(0);
-            bookingValidation.textContent = "";
-            requestStatus.textContent = "";
-            requestStatus.classList.remove("success");
-            roomOptions.innerHTML = "";
-            requestSummary.innerHTML = "";
-            populateStates();
+      },
+      fr: {
+        dir: "ltr",
+        brandSubtitle: "Agence de voyage specialisee en Omra",
+        searchPlaceholder: "Rechercher un hotel",
+        dateFilterPlaceholder: "Filtrer par date",
+        categoryLabel: "Categories d'offres",
+        categories: { all: "Toutes les offres", Economy: "Economy", Premium: "Premium", VIP: "VIP" },
+        heroEyebrow: "Voyages Omra soigneusement organises",
+        heroTitle: "Choisissez votre offre et reservez en quelques etapes claires",
+        heroText: "Une experience simple en arabe et en francais, avec calcul automatique des chambres et des prix, prete pour une integration Google Sheets.",
+        offersKicker: "Offres",
+        offersTitle: "Forfaits Omra disponibles",
+        offersText: "Trois categories principales pour differents budgets avec hotels a La Mecque et a Medine.",
+        bookingKicker: "Details de l'offre",
+        peopleCountLabel: "Nombre de personnes",
+        peoplePlaceholder: "Exemple : 4",
+        roomCountLabel: "Nombre de chambres",
+        totalPriceLabel: "Prix total",
+        confirmBooking: "Confirmer la reservation",
+        requestKicker: "Confirmation",
+        requestTitle: "Verifier la reservation et envoyer la demande",
+        fullNameLabel: "Nom complet",
+        phoneLabel: "Numero de telephone",
+        emailLabel: "E-mail",
+        stateLabel: "Wilaya",
+        submitRequest: "Envoyer la demande",
+        submitting: "Envoi en cours...",
+        emptyState: "Aucun resultat ne correspond a votre recherche.",
+        offerMeta: {
+          navHome: "Accueil",
+          navOffers: "Offres",
+          navContact: "0560515258",
+          date: "Date de voyage",
+          makkah: "Hotel a La Mecque",
+          madinah: "Hotel a Medine",
+          airport: "Aeroport de depart",
+          from: "A partir de"
+        },
+        getOffer: "Voir l'offre",
+        flipPrices: "Details",
+        flipBack: "Retour",
+        summary: {
+          offer: "Offre",
+          date: "Date de voyage",
+          makkah: "Hotel a La Mecque",
+          madinah: "Hotel a Medine",
+          people: "Nombre de personnes",
+          rooms: "Nombre de chambres",
+          roomType: "Type de chambre",
+          total: "Total"
+        },
+        roomLabels: {
+          quintuple: "Quintuple",
+          quadruple: "Quadruple",
+          triple: "Triple",
+          double: "Double"
+        },
+        roomCapacityText: "personnes par chambre",
+        statePlaceholder: "Choisir la wilaya",
+        footerRights: "© 2024 E-Khairat Tourisme & Voyages. Tous droits réservés.",
+        validation: {
+          peopleRequired: "Veuillez saisir le nombre de personnes.",
+          quadMinimum: "La chambre quadruple peut commencer a partir d'une personne, puis l'ajout se fait personne par personne avec calcul automatique des chambres. Une chambre est ajoutee pour chaque groupe de 4 personnes.",
+          multiple: "Le nombre de personnes ne correspond pas a la chambre {room}. Valeurs autorisees : {values}",
+          bookingMissing: "Aucune donnee de reservation n'a ete trouvee.",
+          formRequired: "Veuillez remplir tous les champs obligatoires avant l'envoi.",
+          submitError: "Impossible d'envoyer la demande vers Google Sheets. Verifiez la configuration du fichier ou les autorisations Google Apps Script.",
+          submitSuccess: "La demande a ete envoyee avec succes. Nous vous contacterons bientot.",
+          duplicatePhone: "Ce numéro est déjà enregistré. Veuillez attendre notre appel prochainement."
         }
+      }
+    };
 
-        function finalizeRequestSuccess() {
-            closeModal(bookingModal);
-            closeModal(requestModal);
-            resetBookingFlow();
-        }
+    let offers = [];
 
-        function formatDzd(value) {
-            const locale = state.language === "fr" ? "fr-FR" : "ar-DZ";
-            return new Intl.NumberFormat(locale).format(value) + " DZD";
-        }
+    const algerianLocations = {
+      "الشلف": [], "تلمسان": [], "تيارت": [], "تيسمسيلت": [], "سعيدة": [], "سيدي بلعباس": [], "مستغانم": [],
+      "معسكر": [], "وهران": [], "البيض": [], "النعامة": [], "عين تموشنت": [], "غليزان": []
+    };
 
-        function t() {
-            const keys = Array.from(arguments);
-            return keys.reduce((acc, key) => acc && acc[key], translations[state.language]);
-        }
+    const roomTypes = [
+      { key: "quintuple", capacity: 5 }, { key: "quadruple", capacity: 4 },
+      { key: "triple", capacity: 3 }, { key: "double", capacity: 2 }
+    ];
 
-        function localizeField(field) {
-            return typeof field === "object" ? field[state.language] : field;
-        }
+    function loadOffers() {
+      return new Promise((resolve, reject) => {
+        google.script.run
+          .withSuccessHandler((data) => {
+            offers = data;
+            resolve();
+          })
+          .withFailureHandler((error) => {
+            console.error('Error loading offers:', error);
+            // استخدم البيانات الافتراضية في حالة الخطأ
+            // يمكنك هنا وضع بيانات افتراضية إذا أردت، أو تركها فارغة
+            resolve();
+          })
+          .getOffers();
+      });
+    }
 
-        function renderGuestIcons(capacity) {
-            return `
+    const offersGrid = document.getElementById("offersGrid");
+    const hotelSearch = document.getElementById("hotelSearch");
+    const dateFilter = document.getElementById("dateFilter");
+    const categoryCheckboxes = document.querySelectorAll(".chip-checkbox");
+    const bookingModal = document.getElementById("bookingModal");
+    const requestModal = document.getElementById("requestModal");
+    const bookingOfferName = document.getElementById("bookingOfferName");
+    const stateSelect = document.getElementById("stateSelect");
+    const roomOptions = document.getElementById("roomOptions");
+
+    const peopleCountInput = document.getElementById("peopleCount");
+    const roomCountValue = document.getElementById("roomCountValue");
+    const totalPriceValue = document.getElementById("totalPriceValue");
+    const bookingValidation = document.getElementById("bookingValidation");
+    const requestSummary = document.getElementById("requestSummary");
+    const requestStatus = document.getElementById("requestStatus");
+
+    const submitRequestBtn = document.getElementById("submitRequestBtn");
+    const langArBtn = document.getElementById("langArBtn");
+    const langFrBtn = document.getElementById("langFrBtn");
+
+    const state = {
+      language: "ar",
+      activeOffer: null,
+      selectedRoomKey: "quintuple",
+      booking: null
+    };
+
+    function setActiveNav(el) {
+      document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function resetBookingFlow() {
+      state.activeOffer = null;
+      state.selectedRoomKey = "quintuple";
+      state.booking = null;
+      document.getElementById("bookingForm").reset();
+      document.getElementById("requestForm").reset();
+      roomCountValue.textContent = "0";
+      totalPriceValue.textContent = formatDzd(0);
+      bookingValidation.textContent = "";
+      requestStatus.textContent = "";
+      requestStatus.classList.remove("success");
+      roomOptions.innerHTML = "";
+      requestSummary.innerHTML = "";
+      if (stateSelect) stateSelect.selectedIndex = 0;
+    }
+
+    function finalizeRequestSuccess() {
+      closeModal(bookingModal);
+      closeModal(requestModal);
+      resetBookingFlow();
+    }
+
+    function formatDzd(value) {
+      const locale = state.language === "fr" ? "fr-FR" : "ar-DZ";
+      return new Intl.NumberFormat(locale).format(value) + " DZD";
+    }
+
+    function t() {
+      const keys = Array.from(arguments);
+      return keys.reduce((acc, key) => acc && acc[key], translations[state.language]);
+    }
+
+    function localizeField(field) {
+      return typeof field === "object" ? field[state.language] : field;
+    }
+
+    function renderGuestIcons(capacity) {
+      return `
                 <span class="guest-icons" aria-hidden="true">
                     ${Array.from({ length: capacity }, () => '<span class="guest-icon"></span>').join("")}
                 </span>
             `;
-        }
+    }
 
-        function buildAllowedValues(capacity) {
-            const separator = state.language === "fr" ? ", " : "، ";
-            return `${capacity}${separator}${capacity * 2}${separator}${capacity * 3}...`;
-        }
+    function buildAllowedValues(capacity) {
+      const separator = state.language === "fr" ? ", " : "، ";
+      return `${capacity}${separator}${capacity * 2}${separator}${capacity * 3}...`;
+    }
 
-        function updateLanguageUI() {
-            const lang = translations[state.language];
-            document.documentElement.lang = state.language;
-            document.documentElement.dir = lang.dir;
+    function updateLanguageUI() {
+      const lang = translations[state.language];
+      document.documentElement.lang = state.language;
+      document.documentElement.dir = lang.dir;
 
-            document.getElementById("brandSubtitle").textContent = lang.brandSubtitle;
-            hotelSearch.placeholder = lang.searchPlaceholder;
-            dateFilter.placeholder = lang.dateFilterPlaceholder;
-            document.getElementById("labelAll").textContent = lang.categories.all;
-            document.getElementById("labelEconomy").textContent = lang.categories.Economy;
-            document.getElementById("labelPremium").textContent = lang.categories.Premium;
-            document.getElementById("labelVIP").textContent = lang.categories.VIP;
+      document.getElementById("brandSubtitle").textContent = lang.brandSubtitle;
+      hotelSearch.placeholder = lang.searchPlaceholder;
+      dateFilter.placeholder = lang.dateFilterPlaceholder;
+      document.getElementById("labelAll").textContent = lang.categories.all;
+      document.getElementById("labelEconomy").textContent = lang.categories.Economy;
+      document.getElementById("labelPremium").textContent = lang.categories.Premium;
+      document.getElementById("labelVIP").textContent = lang.categories.VIP;
 
-            document.getElementById("heroEyebrow").textContent = lang.heroEyebrow;
-            document.getElementById("heroTitle").textContent = lang.heroTitle;
-            document.getElementById("heroText").textContent = lang.heroText;
-            document.getElementById("offersKicker").textContent = lang.offersKicker;
-            document.getElementById("offersTitle").textContent = lang.offersTitle;
-            document.getElementById("offersText").textContent = lang.offersText;
-            document.getElementById("bookingKicker").textContent = lang.bookingKicker;
-            document.getElementById("peopleCountLabel").textContent = lang.peopleCountLabel;
-            peopleCountInput.placeholder = lang.peoplePlaceholder;
-            document.getElementById("roomCountLabel").textContent = lang.roomCountLabel;
-            document.getElementById("totalPriceLabel").textContent = lang.totalPriceLabel;
-            document.getElementById("confirmBookingBtn").textContent = lang.confirmBooking;
-            document.getElementById("requestKicker").textContent = lang.requestKicker;
-            document.getElementById("requestTitle").textContent = lang.requestTitle;
-            document.getElementById("fullNameLabel").textContent = lang.fullNameLabel;
-            document.getElementById("phoneLabel").textContent = lang.phoneLabel;
-            document.getElementById("stateLabel").textContent = lang.stateLabel;
-            submitRequestBtn.textContent = lang.submitRequest;
-            
-            document.getElementById("navHome").textContent = lang.offerMeta.navHome;
-            document.getElementById("navOffers").textContent = lang.offerMeta.navOffers;
-            document.getElementById("navContact").textContent = lang.offerMeta.navContact;
-            document.getElementById("footerRights").textContent = lang.footerRights;
+      document.getElementById("heroEyebrow").textContent = lang.heroEyebrow;
+      document.getElementById("heroTitle").textContent = lang.heroTitle;
+      document.getElementById("heroText").textContent = lang.heroText;
+      document.getElementById("offersKicker").textContent = lang.offersKicker;
+      document.getElementById("offersTitle").textContent = lang.offersTitle;
+      document.getElementById("offersText").textContent = lang.offersText;
+      document.getElementById("bookingKicker").textContent = lang.bookingKicker;
+      document.getElementById("peopleCountLabel").textContent = lang.peopleCountLabel;
+      peopleCountInput.placeholder = lang.peoplePlaceholder;
+      document.getElementById("roomCountLabel").textContent = lang.roomCountLabel;
+      document.getElementById("totalPriceLabel").textContent = lang.totalPriceLabel;
+      document.getElementById("confirmBookingBtn").textContent = lang.confirmBooking;
+      document.getElementById("requestKicker").textContent = lang.requestKicker;
+      document.getElementById("requestTitle").textContent = lang.requestTitle;
+      document.getElementById("fullNameLabel").textContent = lang.fullNameLabel;
+      document.getElementById("phoneLabel").textContent = lang.phoneLabel;
+      document.getElementById("emailLabel").textContent = lang.emailLabel;
+      document.getElementById("stateLabel").textContent = lang.stateLabel;
+      submitRequestBtn.textContent = lang.submitRequest;
 
-            langArBtn.classList.toggle("active", state.language === "ar");
-            langFrBtn.classList.toggle("active", state.language === "fr");
-        }
+      document.getElementById("navHome").textContent = lang.offerMeta.navHome;
+      document.getElementById("navOffers").textContent = lang.offerMeta.navOffers;
+      document.getElementById("navContact").textContent = lang.offerMeta.navContact;
+      document.getElementById("footerRights").textContent = lang.footerRights.replace("2024", new Date().getFullYear()); // Update year dynamically
 
-        function renderOffers(list) {
-            if (!list.length) {
-                offersGrid.innerHTML = `<div class="empty-state alert text-center w-100">${t("emptyState")}</div>`;
-                return;
-            }
+      langArBtn.classList.toggle("active", state.language === "ar");
+      langFrBtn.classList.toggle("active", state.language === "fr");
+    }
 
-            offersGrid.innerHTML = list.map((offer, index) => `
+    function renderOffers(list) {
+      if (!list.length) {
+        offersGrid.innerHTML = `<div class="empty-state alert text-center w-100">${t("emptyState")}</div>`;
+        return;
+      }
+
+      offersGrid.innerHTML = list.map((offer, index) => `
                 <article class="offer-card card h-100 border-0 animate-reveal" data-flip-card style="animation-delay: ${index * 0.1}s">
                     <div class="offer-card-inner">
                         <div class="offer-card-face offer-card-front">
@@ -1911,31 +1900,31 @@ html[dir="ltr"] .form-row label {
                     </div>
                 </article>
             `).join("");
-        }
+    }
 
-        function getFilteredOffers() {
-            const query = hotelSearch.value.trim().toLowerCase();
-            const dateQuery = dateFilter.value.trim().toLowerCase();
-            const selectedCats = Array.from(categoryCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+    function getFilteredOffers() {
+      const query = hotelSearch.value.trim().toLowerCase();
+      const dateQuery = dateFilter.value.trim().toLowerCase();
+      const selectedCats = Array.from(categoryCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
 
-            return offers.filter((offer) => {
-                const matchesCategory = selectedCats.includes("all") || selectedCats.includes(offer.category);
-                const hotelText = [
-                    localizeField(offer.makkahHotel),
-                    localizeField(offer.madinahHotel),
-                    localizeField(offer.name)
-                ].join(" ").toLowerCase();
-                const matchesQuery = !query || hotelText.includes(query);
+      return offers.filter((offer) => {
+        const matchesCategory = selectedCats.includes("all") || selectedCats.includes(offer.category);
+        const hotelText = [
+          localizeField(offer.makkahHotel),
+          localizeField(offer.madinahHotel),
+          localizeField(offer.name)
+        ].join(" ").toLowerCase();
+        const matchesQuery = !query || hotelText.includes(query);
 
-                const dateText = localizeField(offer.date).toLowerCase();
-                const matchesDate = !dateQuery || dateText.includes(dateQuery);
+        const dateText = localizeField(offer.date).toLowerCase();
+        const matchesDate = !dateQuery || dateText.includes(dateQuery);
 
-                return matchesCategory && matchesQuery && matchesDate;
-            });
-        }
+        return matchesCategory && matchesQuery && matchesDate;
+      });
+    }
 
-        function renderRoomOptions(offer) {
-            roomOptions.innerHTML = roomTypes.map((room) => `
+    function renderRoomOptions(offer) {
+      roomOptions.innerHTML = roomTypes.map((room) => `
                 <button
                     class="room-card btn ${room.key === state.selectedRoomKey ? "active" : ""}"
                     type="button"
@@ -1946,99 +1935,99 @@ html[dir="ltr"] .form-row label {
                     <small>${room.capacity} ${t("roomCapacityText")}</small>
                 </button>
             `).join("");
-        }
+    }
 
-        function openBookingModal(offerId) {
-            const offer = offers.find((item) => item.id === Number(offerId));
-            if (!offer) {
-                return;
-            }
+    function openBookingModal(offerId) {
+      const offer = offers.find((item) => item.id === Number(offerId));
+      if (!offer) {
+        return;
+      }
 
-            state.activeOffer = offer;
-            state.selectedRoomKey = "quintuple";
-            bookingOfferName.textContent = localizeField(offer.name);
-            peopleCountInput.value = "";
-            peopleCountInput.min = "5";
-            peopleCountInput.step = "5";
-            roomCountValue.textContent = "0";
-            totalPriceValue.textContent = formatDzd(0);
-            bookingValidation.textContent = "";
-            renderRoomOptions(offer);
-            showModal(bookingModal);
-        }
+      state.activeOffer = offer;
+      state.selectedRoomKey = "quintuple";
+      bookingOfferName.textContent = localizeField(offer.name);
+      peopleCountInput.value = "";
+      peopleCountInput.min = "5";
+      peopleCountInput.step = "5";
+      roomCountValue.textContent = "0";
+      totalPriceValue.textContent = formatDzd(0);
+      bookingValidation.textContent = "";
+      renderRoomOptions(offer);
+      showModal(bookingModal);
+    }
 
-        function showModal(modal) {
-            modal.classList.remove("hidden");
-            modal.setAttribute("aria-hidden", "false");
-            document.body.classList.add("modal-open");
-        }
+    function showModal(modal) {
+      modal.classList.remove("hidden");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+    }
 
-        function closeModal(modal) {
-            modal.classList.add("hidden");
-            modal.setAttribute("aria-hidden", "true");
+    function closeModal(modal) {
+      modal.classList.add("hidden");
+      modal.setAttribute("aria-hidden", "true");
 
-            if (document.querySelector('.modal[aria-hidden="false"]')) {
-                return;
-            }
+      if (document.querySelector('.modal[aria-hidden="false"]')) {
+        return;
+      }
 
-            document.body.classList.remove("modal-open");
-        }
+      document.body.classList.remove("modal-open");
+    }
 
-        function calculateBooking() {
-            if (!state.activeOffer) {
-                return null;
-            }
+    function calculateBooking() {
+      if (!state.activeOffer) {
+        return null;
+      }
 
-            const selectedRoom = roomTypes.find((room) => room.key === state.selectedRoomKey);
-            const peopleCount = Number(peopleCountInput.value);
+      const selectedRoom = roomTypes.find((room) => room.key === state.selectedRoomKey);
+      const peopleCount = Number(peopleCountInput.value);
 
-            if (!peopleCount || peopleCount < 1) {
-                bookingValidation.textContent = t("validation", "peopleRequired");
-                roomCountValue.textContent = "0";
-                totalPriceValue.textContent = formatDzd(0);
-                return null;
-            }
+      if (!peopleCount || peopleCount < 1) {
+        bookingValidation.textContent = t("validation", "peopleRequired");
+        roomCountValue.textContent = "0";
+        totalPriceValue.textContent = formatDzd(0);
+        return null;
+      }
 
-            if (selectedRoom.key !== "quadruple" && peopleCount % selectedRoom.capacity !== 0) {
-                bookingValidation.textContent = t("validation", "multiple")
-                    .replace("{room}", t("roomLabels", selectedRoom.key))
-                    .replace("{values}", buildAllowedValues(selectedRoom.capacity));
-                roomCountValue.textContent = "0";
-                totalPriceValue.textContent = formatDzd(0);
-                return null;
-            }
+      if (selectedRoom.key !== "quadruple" && peopleCount % selectedRoom.capacity !== 0) {
+        bookingValidation.textContent = t("validation", "multiple")
+          .replace("{room}", t("roomLabels", selectedRoom.key))
+          .replace("{values}", buildAllowedValues(selectedRoom.capacity));
+        roomCountValue.textContent = "0";
+        totalPriceValue.textContent = formatDzd(0);
+        return null;
+      }
 
-            const roomCount = selectedRoom.key === "quadruple"
-                ? Math.ceil(peopleCount / selectedRoom.capacity)
-                : peopleCount / selectedRoom.capacity;
-            const totalPrice = state.activeOffer.roomPrices[selectedRoom.key] * peopleCount;
+      const roomCount = selectedRoom.key === "quadruple"
+        ? Math.ceil(peopleCount / selectedRoom.capacity)
+        : peopleCount / selectedRoom.capacity;
+      const totalPrice = state.activeOffer.roomPrices[selectedRoom.key] * peopleCount;
 
-            bookingValidation.textContent = selectedRoom.key === "quadruple"
-                ? t("validation", "quadMinimum")
-                : "";
-            roomCountValue.textContent = String(roomCount);
-            totalPriceValue.textContent = formatDzd(totalPrice);
+      bookingValidation.textContent = selectedRoom.key === "quadruple"
+        ? t("validation", "quadMinimum")
+        : "";
+      roomCountValue.textContent = String(roomCount);
+      totalPriceValue.textContent = formatDzd(totalPrice);
 
-            return {
-                category: state.activeOffer.category,
-                offerId: state.activeOffer.id,
-                offerName: localizeField(state.activeOffer.name),
-                date: localizeField(state.activeOffer.date),
-                makkahHotel: localizeField(state.activeOffer.makkahHotel),
-                madinahHotel: localizeField(state.activeOffer.madinahHotel),
-                airport: localizeField(state.activeOffer.airport),
-                roomType: t("roomLabels", selectedRoom.key),
-                roomCapacity: selectedRoom.capacity,
-                roomCount,
-                peopleCount,
-                pricePerPerson: state.activeOffer.roomPrices[selectedRoom.key],
-                totalPrice
-            };
-        }
+      return {
+        category: state.activeOffer.category,
+        offerId: state.activeOffer.id,
+        offerName: localizeField(state.activeOffer.name),
+        date: localizeField(state.activeOffer.date),
+        makkahHotel: localizeField(state.activeOffer.makkahHotel),
+        madinahHotel: localizeField(state.activeOffer.madinahHotel),
+        airport: localizeField(state.activeOffer.airport),
+        roomType: t("roomLabels", selectedRoom.key),
+        roomCapacity: selectedRoom.capacity,
+        roomCount,
+        peopleCount,
+        pricePerPerson: state.activeOffer.roomPrices[selectedRoom.key],
+        totalPrice
+      };
+    }
 
-        function renderRequestSummary() {
-            const booking = state.booking;
-            requestSummary.innerHTML = `
+    function renderRequestSummary() {
+      const booking = state.booking;
+      requestSummary.innerHTML = `
                 <div class="summary-card card border-0"><span>${t("summary", "offer")}</span><strong>${booking.offerName}</strong></div>
                 <div class="summary-card card border-0"><span>${t("summary", "date")}</span><strong>${booking.date}</strong></div>
                 <div class="summary-card card border-0"><span>${t("summary", "makkah")}</span><strong>${booking.makkahHotel}</strong></div>
@@ -2048,240 +2037,247 @@ html[dir="ltr"] .form-row label {
                 <div class="summary-card card border-0"><span>${t("summary", "roomType")}</span><strong>${booking.roomType}</strong></div>
                 <div class="summary-card card border-0 accent"><span>${t("summary", "total")}</span><strong>${formatDzd(booking.totalPrice)}</strong></div>
             `;
+    }
+
+    function getSelectedState() {
+      return stateSelect ? stateSelect.value : "";
+    }
+
+    function submitToGoogleSheets(payload) {
+      return new Promise((resolve, reject) => {
+        if (typeof google === "undefined" || !google.script || !google.script.run) {
+          reject(new Error(t("validation", "submitError")));
+          return;
         }
 
-        function getSelectedState() {
-            const selectedState = stateOptions.querySelector('input[name="state"]:checked');
-            return selectedState ? selectedState.value : "";
+        google.script.run
+          .withSuccessHandler(resolve)
+          .withFailureHandler((error) => {
+            reject(new Error(error && error.message ? error.message : t("validation", "submitError")));
+          })
+          .submitBooking(payload);
+      });
+    }
+
+    function setOfferCardFlip(card, isFlipped) {
+      if (!card) {
+        return;
+      }
+
+      card.classList.toggle("is-flipped", isFlipped);
+      card.querySelectorAll("[data-flip-toggle]").forEach((button) => {
+        button.setAttribute("aria-pressed", String(isFlipped));
+      });
+      card.querySelectorAll(".offer-card-front button").forEach((button) => {
+        button.tabIndex = isFlipped ? -1 : 0;
+      });
+      card.querySelectorAll(".offer-card-back button").forEach((button) => {
+        button.tabIndex = isFlipped ? 0 : -1;
+      });
+    }
+
+    offersGrid.addEventListener("click", (event) => {
+      const target = event.target;
+      
+      // إذا تم النقر على زر الحجز، افتح المودال ولا تقم بتدوير البطاقة
+      const bookingBtn = target.closest("[data-offer-id]");
+      if (bookingBtn) {
+        event.preventDefault();
+        event.stopPropagation();
+        openBookingModal(bookingBtn.dataset.offerId);
+        return;
+      }
+
+      // تدوير البطاقة عند النقر في أي مكان آخر داخلها
+      const card = target.closest("[data-flip-card]");
+      if (card) {
+        event.preventDefault();
+        setOfferCardFlip(card, !card.classList.contains("is-flipped"));
+      }
+    });
+
+    roomOptions.addEventListener("click", (event) => {
+      const roomButton = event.target.closest("[data-room-key]");
+      if (!roomButton || !state.activeOffer) {
+        return;
+      }
+
+      state.selectedRoomKey = roomButton.dataset.roomKey;
+      const selectedRoom = roomTypes.find((room) => room.key === state.selectedRoomKey);
+      peopleCountInput.min = selectedRoom.key === "quadruple" ? "1" : String(selectedRoom.capacity);
+      peopleCountInput.step = selectedRoom.key === "quadruple" ? "1" : String(selectedRoom.capacity);
+      renderRoomOptions(state.activeOffer);
+      calculateBooking();
+    });
+
+    document.querySelectorAll("[data-close]").forEach((element) => {
+      element.addEventListener("click", () => {
+        const target = element.getAttribute("data-close");
+        closeModal(target === "booking" ? bookingModal : requestModal);
+      });
+    });
+
+    hotelSearch.addEventListener("input", () => renderOffers(getFilteredOffers()));
+    dateFilter.addEventListener("input", () => renderOffers(getFilteredOffers()));
+
+    categoryCheckboxes.forEach(cb => {
+      cb.addEventListener("change", (e) => {
+        if (e.target.value === "all" && e.target.checked) {
+          categoryCheckboxes.forEach(other => { if (other !== e.target) other.checked = false; });
+        } else if (e.target.checked) {
+          document.getElementById("catAll").checked = false;
         }
 
-        function populateStates() {
-            const states = Object.keys(algerianLocations);
-            stateOptions.innerHTML = states.map((item) => `
-                <label class="state-option">
-                    <input type="checkbox" name="state" value="${item}">
-                    <span>${item}</span>
-                </label>
-            `).join("");
+        // إذا لم يتم اختيار أي شيء، ارجع لـ "الكل" تلقائياً
+        const anyChecked = Array.from(categoryCheckboxes).some(c => c.checked);
+        if (!anyChecked) document.getElementById("catAll").checked = true;
+
+        renderOffers(getFilteredOffers());
+      });
+    });
+
+    peopleCountInput.addEventListener("input", calculateBooking);
+    langArBtn.addEventListener("click", () => setLanguage("ar"));
+    langFrBtn.addEventListener("click", () => setLanguage("fr"));
+
+    document.getElementById("bookingForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const booking = calculateBooking();
+
+      if (!booking) {
+        return;
+      }
+
+      state.booking = booking;
+      renderRequestSummary();
+      requestStatus.classList.remove("success");
+      requestStatus.textContent = "";
+      closeModal(bookingModal);
+      showModal(requestModal);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      if (requestModal.getAttribute("aria-hidden") === "false") {
+        closeModal(requestModal);
+        return;
+      }
+
+      if (bookingModal.getAttribute("aria-hidden") === "false") {
+        closeModal(bookingModal);
+      }
+    });
+
+    document.getElementById("requestForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!state.booking) {
+        requestStatus.classList.remove("success");
+        requestStatus.textContent = t("validation", "bookingMissing");
+        return;
+      }
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const phoneNumber = document.getElementById("phoneNumber").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const stateVal = getSelectedState();
+
+      if (!fullName || !phoneNumber || !email || !stateVal) {
+        requestStatus.classList.remove("success");
+        requestStatus.textContent = t("validation", "formRequired");
+        return;
+      }
+
+      const payload = {
+        ...state.booking,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+        email: email,
+        state: stateVal,
+        submittedAt: new Date().toISOString()
+      };
+
+      submitRequestBtn.disabled = true;
+      submitRequestBtn.textContent = t("submitting");
+      requestStatus.classList.remove("success");
+      requestStatus.textContent = "";
+
+      try {
+        const response = await submitToGoogleSheets(payload);
+        requestStatus.classList.add("success");
+        requestStatus.textContent = t("validation", "submitSuccess");
+
+        // فتح رابط الواتساب الذي تم إنشاؤه في السكربت تلقائياً
+        if (response && response.whatsappUrl) {
+          window.open(response.whatsappUrl, '_blank');
         }
 
-        function submitToGoogleSheets(payload) {
-            return new Promise((resolve, reject) => {
-                if (typeof google === "undefined" || !google.script || !google.script.run) {
-                    reject(new Error(t("validation", "submitError")));
-                    return;
-                }
-
-                google.script.run
-                    .withSuccessHandler(resolve)
-                    .withFailureHandler((error) => {
-                        reject(new Error(error && error.message ? error.message : t("validation", "submitError")));
-                    })
-                    .submitBooking(payload);
-            });
+        setTimeout(() => {
+          finalizeRequestSuccess();
+        }, 2000);
+      } catch (error) {
+        requestStatus.classList.remove("success");
+        if (error.message === "DUPLICATE_PHONE") {
+          requestStatus.textContent = t("validation", "duplicatePhone");
+        } else {
+          requestStatus.textContent = error.message;
         }
+      } finally {
+        submitRequestBtn.disabled = false;
+        submitRequestBtn.textContent = t("submitRequest");
+      }
+    });
 
-        function setOfferCardFlip(card, isFlipped) {
-            if (!card) {
-                return;
-            }
+    function setLanguage(language) {
+      state.language = language;
+      updateLanguageUI();
+      renderOffers(getFilteredOffers());
 
-            card.classList.toggle("is-flipped", isFlipped);
-            card.querySelectorAll("[data-flip-toggle]").forEach((button) => {
-                button.setAttribute("aria-pressed", String(isFlipped));
-            });
-            card.querySelectorAll(".offer-card-front button").forEach((button) => {
-                button.tabIndex = isFlipped ? -1 : 0;
-            });
-            card.querySelectorAll(".offer-card-back button").forEach((button) => {
-                button.tabIndex = isFlipped ? 0 : -1;
-            });
-        }
+      const placeholder = document.getElementById("statePlaceholder");
+      if (placeholder) {
+        placeholder.textContent = t("statePlaceholder");
+      }
 
-        offersGrid.addEventListener("click", (event) => {
-            const flipButton = event.target.closest("[data-flip-toggle]");
-            if (flipButton) {
-                event.preventDefault();
-                const card = flipButton.closest("[data-flip-card]");
-                setOfferCardFlip(card, card ? !card.classList.contains("is-flipped") : false);
-                return;
-            }
+      if (state.activeOffer && bookingModal.getAttribute("aria-hidden") === "false") {
+        bookingOfferName.textContent = localizeField(state.activeOffer.name);
+        renderRoomOptions(state.activeOffer);
+        calculateBooking();
+      }
 
-            const button = event.target.closest("[data-offer-id]");
-            if (button) {
-                event.preventDefault();
-                openBookingModal(button.dataset.offerId);
-            }
-        });
+      if (state.booking && requestModal.getAttribute("aria-hidden") === "false") {
+        const selectedRoom = roomTypes.find((room) => room.capacity === state.booking.roomCapacity);
+        state.booking = {
+          ...state.booking,
+          offerName: localizeField(state.activeOffer.name),
+          date: localizeField(state.activeOffer.date),
+          makkahHotel: localizeField(state.activeOffer.makkahHotel),
+          madinahHotel: localizeField(state.activeOffer.madinahHotel),
+          airport: localizeField(state.activeOffer.airport),
+          roomType: selectedRoom ? t("roomLabels", selectedRoom.key) : state.booking.roomType
+        };
+        renderRequestSummary();
+      }
+    }
 
-        roomOptions.addEventListener("click", (event) => {
-            const roomButton = event.target.closest("[data-room-key]");
-            if (!roomButton || !state.activeOffer) {
-                return;
-            }
-
-            state.selectedRoomKey = roomButton.dataset.roomKey;
-            const selectedRoom = roomTypes.find((room) => room.key === state.selectedRoomKey);
-            peopleCountInput.min = selectedRoom.key === "quadruple" ? "1" : String(selectedRoom.capacity);
-            peopleCountInput.step = selectedRoom.key === "quadruple" ? "1" : String(selectedRoom.capacity);
-            renderRoomOptions(state.activeOffer);
-            calculateBooking();
-        });
-
-        document.querySelectorAll("[data-close]").forEach((element) => {
-            element.addEventListener("click", () => {
-                const target = element.getAttribute("data-close");
-                closeModal(target === "booking" ? bookingModal : requestModal);
-            });
-        });
-
-        hotelSearch.addEventListener("input", () => renderOffers(getFilteredOffers()));
-        dateFilter.addEventListener("input", () => renderOffers(getFilteredOffers()));
-        
-        categoryCheckboxes.forEach(cb => {
-            cb.addEventListener("change", (e) => {
-                if (e.target.value === "all" && e.target.checked) {
-                    categoryCheckboxes.forEach(other => { if(other !== e.target) other.checked = false; });
-                } else if (e.target.checked) {
-                    document.getElementById("catAll").checked = false;
-                }
-                
-                // إذا لم يتم اختيار أي شيء، ارجع لـ "الكل" تلقائياً
-                const anyChecked = Array.from(categoryCheckboxes).some(c => c.checked);
-                if (!anyChecked) document.getElementById("catAll").checked = true;
-                
-                renderOffers(getFilteredOffers());
-            });
-        });
-
-        stateOptions.addEventListener("change", (event) => {
-            const selectedCheckbox = event.target.closest('input[name="state"]');
-            if (!selectedCheckbox || !selectedCheckbox.checked) {
-                return;
-            }
-
-            stateOptions.querySelectorAll('input[name="state"]').forEach((checkbox) => {
-                if (checkbox !== selectedCheckbox) {
-                    checkbox.checked = false;
-                }
-            });
-        });
-
-        peopleCountInput.addEventListener("input", calculateBooking);
-        langArBtn.addEventListener("click", () => setLanguage("ar"));
-        langFrBtn.addEventListener("click", () => setLanguage("fr"));
-
-        document.getElementById("bookingForm").addEventListener("submit", (event) => {
-            event.preventDefault();
-            const booking = calculateBooking();
-
-            if (!booking) {
-                return;
-            }
-
-            state.booking = booking;
-            renderRequestSummary();
-            requestStatus.classList.remove("success");
-            requestStatus.textContent = "";
-            closeModal(bookingModal);
-            showModal(requestModal);
-        });
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key !== "Escape") {
-                return;
-            }
-
-            if (requestModal.getAttribute("aria-hidden") === "false") {
-                closeModal(requestModal);
-                return;
-            }
-
-            if (bookingModal.getAttribute("aria-hidden") === "false") {
-                closeModal(bookingModal);
-            }
-        });
-
-        document.getElementById("requestForm").addEventListener("submit", async (event) => {
-            event.preventDefault();
-
-            if (!state.booking) {
-                requestStatus.classList.remove("success");
-                requestStatus.textContent = t("validation", "bookingMissing");
-                return;
-            }
-
-            const payload = {
-                ...state.booking,
-                fullName: document.getElementById("fullName").value.trim(),
-                phoneNumber: document.getElementById("phoneNumber").value.trim(),
-                state: getSelectedState(),
-                submittedAt: new Date().toISOString()
-            };
-
-            if (!payload.fullName || !payload.phoneNumber || !payload.state) {
-                requestStatus.classList.remove("success");
-                requestStatus.textContent = t("validation", "formRequired");
-                return;
-            }
-
-            submitRequestBtn.disabled = true;
-            submitRequestBtn.textContent = t("submitting");
-            requestStatus.classList.remove("success");
-            requestStatus.textContent = "";
-
-            try {
-                await submitToGoogleSheets(payload);
-                requestStatus.classList.add("success");
-                requestStatus.textContent = t("validation", "submitSuccess");
-                setTimeout(() => {
-                    finalizeRequestSuccess();
-                }, 1200);
-            } catch (error) {
-                requestStatus.classList.remove("success");
-                if (error.message === "DUPLICATE_PHONE") {
-                    requestStatus.textContent = t("validation", "duplicatePhone");
-                } else {
-                    requestStatus.textContent = error.message;
-                }
-            } finally {
-                submitRequestBtn.disabled = false;
-                submitRequestBtn.textContent = t("submitRequest");
-            }
-        });
-
-        function setLanguage(language) {
-            state.language = language;
-            updateLanguageUI();
-            renderOffers(getFilteredOffers());
-            populateStates();
-
-            if (state.activeOffer && bookingModal.getAttribute("aria-hidden") === "false") {
-                bookingOfferName.textContent = localizeField(state.activeOffer.name);
-                renderRoomOptions(state.activeOffer);
-                calculateBooking();
-            }
-
-            if (state.booking && requestModal.getAttribute("aria-hidden") === "false") {
-                const selectedRoom = roomTypes.find((room) => room.capacity === state.booking.roomCapacity);
-                state.booking = {
-                    ...state.booking,
-                    offerName: localizeField(state.activeOffer.name),
-                    date: localizeField(state.activeOffer.date),
-                    makkahHotel: localizeField(state.activeOffer.makkahHotel),
-                    madinahHotel: localizeField(state.activeOffer.madinahHotel),
-                    airport: localizeField(state.activeOffer.airport),
-                    roomType: selectedRoom ? t("roomLabels", selectedRoom.key) : state.booking.roomType
-                };
-                renderRequestSummary();
-            }
-        }
-
-        loadOffers().then(() => {
-            updateLanguageUI();
-            renderOffers(getFilteredOffers());
-            populateStates();
-        });
-    </script>
+    // إدارة تشغيل التطبيق مع الـ Splash Screen
+    window.addEventListener('DOMContentLoaded', async () => {
+      // البدء في تحميل البيانات في الخلفية
+      const dataPromise = loadOffers();
+      
+      // انتظار 3 ثواني للـ Splash Screen
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      await dataPromise;
+      updateLanguageUI();
+      renderOffers(getFilteredOffers());
+      
+      // إخفاء الـ Splash Screen بحركة انسيابية
+      document.getElementById('splashScreen').classList.add('splash-hidden');
+    });
+  </script>
 </body>
+
 </html>
