@@ -54,36 +54,6 @@
       overflow: hidden;
     }
 
-    /* Splash Screen Styles (Framer Motion Feel) */
-    .splash-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.1s ease;
-    }
-
-    .splash-logo {
-      width: 140px;
-      height: auto;
-      filter: brightness(1);
-      animation: logoEntrance 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    @keyframes logoEntrance {
-      0% { transform: scale(0.5); opacity: 0; filter: blur(10px); }
-      100% { transform: scale(1); opacity: 1; filter: blur(0); }
-    }
-
-    .splash-hidden {
-      transform: translateY(-100%);
-      pointer-events: none;
-    }
-
     button,
     input,
     select {
@@ -1363,11 +1333,6 @@
 </head>
 
 <body>
-  <!-- Splash Screen -->
-  <div id="splashScreen" class="splash-screen">
-    <img src="logo.png" alt="الخيرات" class="splash-logo">
-  </div>
-
   <div class="page-shell container-xl">
     <header class="hero">
       <nav class="topbar">
@@ -2262,20 +2227,10 @@
       }
     }
 
-    // إدارة تشغيل التطبيق مع الـ Splash Screen
     window.addEventListener('DOMContentLoaded', async () => {
-      // البدء في تحميل البيانات في الخلفية
-      const dataPromise = loadOffers();
-      
-      // انتظار 3 ثواني للـ Splash Screen
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      await dataPromise;
+      await loadOffers();
       updateLanguageUI();
       renderOffers(getFilteredOffers());
-      
-      // إخفاء الـ Splash Screen بحركة انسيابية
-      document.getElementById('splashScreen').classList.add('splash-hidden');
     });
   </script>
 </body>
